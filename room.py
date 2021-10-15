@@ -29,11 +29,11 @@ class Room:
 	right = ""
 	roomObjects = [] # a lst of the different objects in the room
 
-	def __init__(self , _name, _width=15, _height=5, objects=[]):
+	def __init__(self , _name, _width=15, _height=5, _roomObjects=[["none",0,0]]):
 		self.name = _name
 		self.width = max(_width,15)
 		self.height = max(_height,5)
-		self.roomObjects = objects
+		self.roomObjects = _roomObjects
 
 
 	def drawRoom(self, player, other_player):
