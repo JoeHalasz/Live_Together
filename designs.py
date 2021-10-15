@@ -34,6 +34,28 @@ def getDesign(name):
 				" \\ (__)|"
 				]
 
+	if (name == "door left"):
+
+		return [
+				"| ",
+				"| ",
+				"| ",
+				"|*",
+				"| ",
+				"| ",
+				]
+
+	if (name == "door right"):
+
+		return [
+				" |",
+				" |",
+				" |",
+				"*|",
+				" |",
+				" |",
+				]
+
 
 	print("Cannot find design " + name)
 	return []
