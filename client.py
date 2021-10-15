@@ -23,6 +23,9 @@ def recieve_data(s):
 	print(new_len)
 	data = s.recv(new_len) 
 	data = pickle.loads(data)
+	print(data)
+	print(data.player.name)
+	print(data.world[0].name)
 	quit()
 	return data.player, data.world
 
