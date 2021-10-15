@@ -8,6 +8,7 @@ player = Player("Joe", starterRoom)
 movedUp=False
 
 def movement(player):
+	global movedUp
 	speed = 1
 	done = False
 	if movedUp:
