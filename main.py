@@ -2,16 +2,7 @@ from room import Room
 from player import Player
 from time import sleep
 import keyboard
-
-
-starterRoom = Room("Starter Room", 40,8)
-nextRoom = Room("Next Room", 100,12)
-
-starterRoom.left = nextRoom
-nextRoom.right = starterRoom
-
-player = Player("Joe", starterRoom)
-justJumped=False
+from client import *
 
 
 def movement(player):
@@ -43,17 +34,14 @@ def movement(player):
 
 
 
-def main():
-	while True:
-		if movement(player):
-			break
-		player.room.drawRoom(player)
 
-		sleep(1/20)
+def main(player, other_player):
 
-	
+	done = movement(player)
+		
+	player.room.drawRoom(player, other_player)
 
-if __name__ == '__main__':
-	main()
+	sleep(1/20)
 
+	return done
 

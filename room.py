@@ -15,7 +15,7 @@ class Room:
 		self.height = max(_height,5)
 
 
-	def drawRoom(self, player=""):
+	def drawRoom(self, player, other_player):
 		screen = ""
 		for x in range(30-self.height):
 			screen += '\n'
@@ -27,30 +27,30 @@ class Room:
 			screen += '|'
 			for x in range(self.width-2):
 				if (player!=""):
-					if (x == player.x and y == player.y): # left foot
+					if (x == player.x and y == player.y) or (x == other_player.x and y == other_player.y): # left foot
 						screen += "_"
-					elif (x == player.x+1 and y == player.y): # left leg
+					elif (x == player.x+1 and y == player.y) or (x == other_player.x+1 and y == other_player.y): # left leg
 						screen += "/"
-					elif (x == player.x+3 and y == player.y): # right leg
+					elif (x == player.x+3 and y == player.y) or (x == other_player.x+3 and y == other_player.y): # right leg
 						screen += "\\"
-					elif (x == player.x+4 and y == player.y): # right foot
+					elif (x == player.x+4 and y == player.y) or (x == other_player.x+4 and y == other_player.y): # right foot
 						screen += "_"
 
-					elif (x == player.x+2 and y == player.y-1): # middle bottom
+					elif (x == player.x+2 and y == player.y-1) or (x == other_player.x+2 and y == other_player.y-1): # middle bottom
 						screen += "*"
-					elif (x == player.x+2 and y == player.y-2): # middle
+					elif (x == player.x+2 and y == player.y-2) or (x == other_player.x+2 and y == other_player.y-2): # middle
 						screen += "*"
 
-					elif (x == player.x+1 and y == player.y-2): # left arm
+					elif (x == player.x+1 and y == player.y-2) or (x == other_player.x+1 and y == other_player.y-2): # left arm
 						screen += "/"
-					elif (x == player.x and y == player.y-2): # left hand
+					elif (x == player.x and y == player.y-2) or (x == other_player.x and y == other_player.y-2): # left hand
 						screen += "_"
-					elif (x == player.x+3 and y == player.y-2): # right arm
+					elif (x == player.x+3 and y == player.y-2) or (x == other_player.x+3 and y == other_player.y-2): # right arm
 						screen += "\\"
-					elif (x == player.x+4 and y == player.y-2): # right hand
+					elif (x == player.x+4 and y == player.y-2) or (x == other_player.x+4 and y == other_player.y-2): # right hand
 						screen += "_"
 
-					elif (x == player.x+2 and y == player.y-3): # middle top
+					elif (x == player.x+2 and y == player.y-3) or (x == other_player.x+2 and y == other_player.y-3): # middle top
 						screen += player.head
 
 					else:
