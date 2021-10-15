@@ -3,6 +3,7 @@ from player import Player
 from time import sleep
 import keyboard
 from client import *
+from world import getRoom
 
 
 def movement(player):
@@ -35,11 +36,11 @@ def movement(player):
 
 
 
-def game(player, other_player):
+def game(player, other_player, world):
 
 	done = movement(player)
 		
-	player.room.drawRoom(player, other_player)
+	getRoom(player.roomName).drawRoom(player, other_player)
 
 	sleep(1/20)
 

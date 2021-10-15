@@ -11,7 +11,7 @@ class Player:
 
 	def __init__(self, _name, _room):
 		self.name = _name
-		self.room = _room.name
+		self.roomName = _room.name
 		self.y = _room.height-1 # put the player on the floor
 	
 
@@ -28,7 +28,7 @@ class Player:
 		if (self.x == room.width-7 and room.right!=""):
 			self.changeRoom(self.room.right, 2)
 		else:
-			self.x = min(self.room.width-7, self.x+amount)
+			self.x = min(room.width-7, self.x+amount)
 		self.head = ">"
 
 	def moveUp(self, amount):
