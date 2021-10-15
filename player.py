@@ -19,7 +19,6 @@ class Player:
 		self.x = max(1, self.x-amount)
 		self.head = "<"
 
-
 	def moveRight(self, amount):
 		self.x = min(self.room.width-8, self.x+amount)
 		self.head = ">"
@@ -31,5 +30,6 @@ class Player:
 		self.y = max(1, self.room.height-1)
 
 	def jump(self):
-		pass
+		if self.y == self.room.height-1: # if we are on the ground
+			self.moveUp(1)
 
