@@ -42,7 +42,7 @@ def game(player, other_player, gameTick):
 	refreshWorld(gameTick)
 
 	done = movement(player)
-		
+
 	getRoom(player.roomName).drawRoom(player, other_player)
 
 	sleep(1/20)

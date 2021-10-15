@@ -8,7 +8,6 @@ justJumped=False
 loadWorld() # create the world
 # connect with server 
 player = Player("Joe", getRoom("starterRoom"))
-player.x = 50
 gameTick = 0
 
 
