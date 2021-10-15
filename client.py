@@ -26,7 +26,6 @@ def recieve_data(s):
 	print(data)
 	print(data.player.name)
 	print(data.world[0].name)
-	quit()
 	return data.player, data.world
 
 
