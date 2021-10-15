@@ -6,15 +6,16 @@ from client import *
 from world import getRoom
 from world import refreshWorld
 
+fps = 60
 
 def movement(player):
 	global justJumped
 	speed = 1
 	done = False
-	player.moveDown(1) # gravity
+	
 
 	if keyboard.is_pressed('shift'):
-		speed=2
+		speed*=2
 	if keyboard.is_pressed('a'):  
 		player.moveLeft(speed)
 	if keyboard.is_pressed('d'):
@@ -24,16 +25,20 @@ def movement(player):
 	else:
 		player.design = "player"
 
-	if keyboard.is_pressed(" "): # this has to be last other than quit
-		if not justJumped:
-			player.jump()
-		justJumped=True
-		return done
+	if keyboard.is_pressed(" ") and player.y == getRoom(player.roomName).height: # player is on ground and pressed space
+		player.jumpState = 6
+	
 	if keyboard.is_pressed('q'):
 		player.moveRight(speed)
 		done = True
 
-	justJumped = False
+	if player.jumpState > 0:
+		player.jump(.5)
+		player.jumpState -= 1
+
+	if (player.jumpState == 0): # this has to happen after jump so that the player hits the ground before next jump
+		player.moveDown(.5) # gravity
+
 	return done
 
 
@@ -41,13 +46,13 @@ def movement(player):
 
 def game(player, other_player, gameTick):
 
-	refreshWorld(gameTick)
+	refreshWorld(gameTick, fps)
 
 	done = movement(player)
 
 	getRoom(player.roomName).drawRoom(player, other_player)
 
-	sleep(1/20)
+	sleep(1/fps)
 
 	return done
 

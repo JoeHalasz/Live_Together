@@ -51,32 +51,32 @@ def loadWorld():
 	
 
 
-def refreshWorld(gameTick):
+def refreshWorld(gameTick, fps):
 	global catJumpTimer
 	
 	catJumpTimer+=1
 
-	if (catJumpTimer >= 96):
+	if (catJumpTimer >= fps*4.8):
 		for cat in cats:
-			if (catJumpTimer == 96):
+			if (catJumpTimer == fps*4.8):
 				cat.y -= 1
-			elif (catJumpTimer == 98):
+			elif (catJumpTimer == fps*4.9):
 				cat.x += 2
-			elif (catJumpTimer == 100):
+			elif (catJumpTimer == fps*5):
 				cat.y += 1
-			elif (catJumpTimer == 102):
+			elif (catJumpTimer == fps*5.1):
 				cat.y -= 1
-			elif (catJumpTimer == 104):
+			elif (catJumpTimer == fps*5.2):
 				cat.x -= 2
-			elif (catJumpTimer == 106):
+			elif (catJumpTimer == fps*5.3):
 				cat.y += 1
-			elif (catJumpTimer == 108):
+			elif (catJumpTimer == fps*5.4):
 				catJumpTimer = 0 # reset the cat jump timer
 	else:
 		for cat in cats:
-			if (gameTick%20 == 0):
+			if (gameTick%fps == 0):
 				cat.x += 1
-			elif (gameTick%20 == 10):
+			elif (gameTick%fps == fps/2):
 				cat.x -= 1
 
 		

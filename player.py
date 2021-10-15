@@ -6,17 +6,17 @@ class Player:
 	y = 0 # ypos
 	roomName = ""
 	head = "o"
-	jumping = 0
+	jumpState = 0
 	design = "player" # this is for the current design that should be drawn
 
 
 	def __init__(self, _name, _room):
 		self.name = _name
 		self.roomName = _room.name
-		self.y = _room.height # put the player on the floor
+		self.y = _room.height-2 # put the player on the floor
 	
 
-	def moveLeft(self, amount):
+	def moveLeft(self, amount=1):
 		room = getRoom(self.roomName)
 		if (self.x == 1 and room.left!=""):
 			self.changeRoom(room.left, room.left.width-7, room.left.height)
@@ -24,7 +24,7 @@ class Player:
 			self.x = max(1, self.x-amount)
 		self.head = "<"
 
-	def moveRight(self, amount):
+	def moveRight(self, amount=1):
 		room = getRoom(self.roomName)
 		if (self.x == room.width-7 and room.right!=""):
 			self.changeRoom(room.right, 2, room.right.height)
@@ -32,17 +32,16 @@ class Player:
 			self.x = min(room.width-7, self.x+amount)
 		self.head = ">"
 
-	def moveUp(self, amount):
-		self.y = max(3, self.y-1)
+	def moveUp(self, amount=1):
+		self.y = max(3, self.y-amount)
 
-	def moveDown(self, amount):
+	def moveDown(self, amount=1):
 		room = getRoom(self.roomName)
-		self.y = max(1, room.height)
+		self.y = min(self.y+amount, room.height)
 
-	def jump(self):
+	def jump(self, amount=1):
 		room = getRoom(self.roomName)
-		if self.y == room.height: # if we are on the ground
-			self.moveUp(1)
+		self.moveUp(amount)
 
 	def changeRoom(self, newRoom, newPosX, newPosY):
 		room = getRoom(self.roomName)

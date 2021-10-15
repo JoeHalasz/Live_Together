@@ -15,7 +15,7 @@ def addObject(room, add, xpos, ypos):
 	for y in range(len(objectSplit)):
 		for x in range(len(objectSplit[y])):
 			if (objectSplit[y][x] != " "):
-				room[ypos-y] = room[ypos-y][:x+xpos] + objectSplit[y][x] + room[ypos-y][x+xpos+1:]
+				room[int(ypos)-y] = room[int(ypos)-y][:x+int(xpos)] + objectSplit[y][x] + room[int(ypos)-y][x+int(xpos)+1:]
 	return room
 
 
