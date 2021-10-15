@@ -1,2 +1,5 @@
 
 *.pyc
+__pycache__/room.cpython-37.pyc
+__pycache__/player.cpython-37.pyc
+*.pyc

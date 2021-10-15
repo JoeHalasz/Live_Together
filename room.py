@@ -6,6 +6,8 @@ class Room:
 	name = ""
 	width = 0
 	height = 0
+	left = ""
+	right = ""
 
 	def __init__(self , _name, _width=15, _height=5):
 		self.name = _name

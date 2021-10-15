@@ -2,7 +2,7 @@
 
 class Player:
 	name = ""
-	x = 0 # xpos 
+	x = 2 # xpos 
 	y = 0 # ypos
 	room = ""
 	head = "o"
@@ -16,11 +16,17 @@ class Player:
 	
 
 	def moveLeft(self, amount):
-		self.x = max(1, self.x-amount)
+		if (self.x == 1 and self.room.left!=""):
+			self.changeRoom(self.room.left, self.room.left.width-7)
+		else:
+			self.x = max(1, self.x-amount)
 		self.head = "<"
 
 	def moveRight(self, amount):
-		self.x = min(self.room.width-8, self.x+amount)
+		if (self.x == self.room.width-7 and self.room.right!=""):
+			self.changeRoom(self.room.right, 2)
+		else:
+			self.x = min(self.room.width-7, self.x+amount)
 		self.head = ">"
 
 	def moveUp(self, amount):
@@ -33,3 +39,6 @@ class Player:
 		if self.y == self.room.height-1: # if we are on the ground
 			self.moveUp(1)
 
+	def changeRoom(self, newRoom, newPos):
+		self.room = newRoom
+		self.x = newPos

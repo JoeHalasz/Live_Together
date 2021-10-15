@@ -5,6 +5,11 @@ import keyboard
 
 
 starterRoom = Room("Starter Room", 40,8)
+nextRoom = Room("Next Room", 100,12)
+
+starterRoom.left = nextRoom
+nextRoom.right = starterRoom
+
 player = Player("Joe", starterRoom)
 justJumped=False
 
