@@ -3,7 +3,8 @@ import pickle
 import socket
 
 
-client_ip = 'localhost'
+client_ip = '25.13.61.235'
+
 def get_connection(s):
 	# Establish connection with client. 
 	s.settimeout(.0001)

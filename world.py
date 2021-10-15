@@ -5,7 +5,7 @@ from designs import getDesign
 
 world = []
 cats = []
-
+catJumpTimer = 0
 
 def getRoom(roomName):
 	for room in world:
@@ -29,34 +29,56 @@ def connectRooms(leftRoom, rightRoom):
 
 
 
-
-
 def loadWorld():
-
-	
 
 	cat = Object("cat", getDesign("cat"), 50, 12)
 	cat2 = Object("small cat", getDesign("small cat"), 25, 12)
+
+	cats.append(cat)
+	cats.append(cat2)
 
 	starterRoom = Room("Starter Room", 100,12,[cat, cat2])
 	leftRoom = Room("left Room", 50,8,[])
 	rightRoom = Room("Next Room", 80,20,[])
 
-	
 	connectRooms(leftRoom, starterRoom)
 	connectRooms(starterRoom, rightRoom)
 
 	world.append(starterRoom)
 	world.append(leftRoom)
 	world.append(rightRoom)
-	cats.append(cat)
-	cats.append(cat2)
+
+	
 
 
 def refreshWorld(gameTick):
-	for cat in cats:
-		if (gameTick%20 == 0):
-			cat.x += 1
-		elif (gameTick%20 == 10):
-			cat.x -= 1
+	global catJumpTimer
+	
+	catJumpTimer+=1
+
+	if (catJumpTimer >= 96):
+		for cat in cats:
+			if (catJumpTimer == 96):
+				cat.y -= 1
+			elif (catJumpTimer == 98):
+				cat.x += 2
+			elif (catJumpTimer == 100):
+				cat.y += 1
+			elif (catJumpTimer == 102):
+				cat.y -= 1
+			elif (catJumpTimer == 104):
+				cat.x -= 2
+			elif (catJumpTimer == 106):
+				cat.y += 1
+			elif (catJumpTimer == 108):
+				catJumpTimer = 0 # reset the cat jump timer
+	else:
+		for cat in cats:
+			if (gameTick%20 == 0):
+				cat.x += 1
+			elif (gameTick%20 == 10):
+				cat.x -= 1
+
+		
+
 

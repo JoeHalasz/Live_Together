@@ -1,22 +1,21 @@
 
 
-def getDesign(name):
+def getDesign(name, head=""):
 	if (name == "player"):
-		return ["  o  ",
+		return ["  "+head+"  ",
 				"_/*\\_",
 				"  *  ",
 				"  *  ",
 				"_/ \\_"
 				]
-	if (name == "playerleft"):
-		player = getDesign("player")
-		player[0] = "  <  "
-		return player
-		
-	if (name == "playerright"):
-		player = getDesign("player")
-		player[0] = "  >  "
-		return player
+
+	if (name == "player crouch"):
+		return ["  "+head+"  ",
+				"_/*\\_",
+				"  *  ",
+				"_/ \\_"
+				]
+	
 
 	if (name == "cat"):
 

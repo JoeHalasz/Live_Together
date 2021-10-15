@@ -2,7 +2,7 @@ import pickle
 import threading
 import socket 
 
-host_ip = 'localhost'
+host_ip = '25.13.61.235'
 
 def send_data(s, player):	
 	# send message back

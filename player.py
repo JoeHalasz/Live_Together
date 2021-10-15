@@ -7,6 +7,7 @@ class Player:
 	roomName = ""
 	head = "o"
 	jumping = 0
+	design = "player" # this is for the current design that should be drawn
 
 
 	def __init__(self, _name, _room):
@@ -40,7 +41,7 @@ class Player:
 
 	def jump(self):
 		room = getRoom(self.roomName)
-		if self.y == room.height-1: # if we are on the ground
+		if self.y == room.height: # if we are on the ground
 			self.moveUp(1)
 
 	def changeRoom(self, newRoom, newPosX, newPosY):
@@ -48,3 +49,4 @@ class Player:
 		self.roomName = newRoom.name
 		self.x = newPosX
 		self.y = newPosY
+

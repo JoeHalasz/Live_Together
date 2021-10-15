@@ -17,10 +17,12 @@ def movement(player):
 		speed=2
 	if keyboard.is_pressed('a'):  
 		player.moveLeft(speed)
-		needUpdate=True
 	if keyboard.is_pressed('d'):
 		player.moveRight(speed)
-		needUpdate=True
+	if keyboard.is_pressed('s'):
+		player.design = "player crouch"
+	else:
+		player.design = "player"
 
 	if keyboard.is_pressed(" "): # this has to be last other than quit
 		if not justJumped:
