@@ -5,20 +5,19 @@ def getDesign(name):
 		return ["  o  ",
 				"_/*\\_",
 				"  *  ",
+				"  *  ",
 				"_/ \\_"
 				]
 	if (name == "playerleft"):
-		return ["  <  ",
-				"_/*\\_",
-				"  *  ",
-				"_/ \\_"
-				]
+		player = getDesign("player")
+		player[0] = "  <  "
+		return player
+		
 	if (name == "playerright"):
-		return ["  >  ",
-				"_/*\\_",
-				"  *  ",
-				"_/ \\_"
-				]
+		player = getDesign("player")
+		player[0] = "  >  "
+		return player
+
 	if (name == "cat"):
 
 		return [
@@ -27,8 +26,15 @@ def getDesign(name):
 				"(  /  )",
 				" \\(__)|"
 				]
+	if (name == "small cat"):
+
+		return [
+				"\\    /\\",
+				" )  ( ')",
+				" \\ (__)|"
+				]
 
 
-
+	print("Cannot find design " + name)
 	return []
 

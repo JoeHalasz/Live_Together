@@ -12,7 +12,7 @@ class Player:
 	def __init__(self, _name, _room):
 		self.name = _name
 		self.roomName = _room.name
-		self.y = _room.height-1 # put the player on the floor
+		self.y = _room.height # put the player on the floor
 	
 
 	def moveLeft(self, amount):
@@ -36,7 +36,7 @@ class Player:
 
 	def moveDown(self, amount):
 		room = getRoom(self.roomName)
-		self.y = max(1, room.height-1)
+		self.y = max(1, room.height)
 
 	def jump(self):
 		room = getRoom(self.roomName)

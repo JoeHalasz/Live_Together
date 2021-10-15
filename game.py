@@ -4,6 +4,7 @@ from time import sleep
 import keyboard
 from client import *
 from world import getRoom
+from world import refreshWorld
 
 
 def movement(player):
@@ -36,7 +37,9 @@ def movement(player):
 
 
 
-def game(player, other_player, world):
+def game(player, other_player, gameTick):
+
+	refreshWorld(gameTick)
 
 	done = movement(player)
 		

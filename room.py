@@ -14,8 +14,8 @@ def addObject(room, add, xpos, ypos):
 
 	for y in range(len(objectSplit)):
 		for x in range(len(objectSplit[y])):
-			room[ypos-y] = room[ypos-y][:x+xpos] + objectSplit[y][x] + room[ypos-y][x+xpos+1:]
-			#room[len(room)-(y+1)][x] = objectSplit[y][x]
+			if (objectSplit[y][x] != " "):
+				room[ypos-y] = room[ypos-y][:x+xpos] + objectSplit[y][x] + room[ypos-y][x+xpos+1:]
 	return room
 
 
@@ -36,7 +36,7 @@ class Room:
 		self.roomObjects = _roomObjects
 
 
-	def drawRoom(self, player, other_player):
+	def drawRoom(self, player, other_player=None):
 		screenList = []
 		nBuffer = 30-self.height
 		for x in range(nBuffer): # white space above roof
@@ -56,13 +56,15 @@ class Room:
 		screenList.append(('-'*self.width)) # floor
 
 		# now add all the room objects
-
+		for o in self.roomObjects:
+			screenList = addObject(screenList, getDesign(o.name), o.x, o.y+nBuffer)
 
 		# now add the player
 		screenList = addObject(screenList, getDesign("player"), player.x, player.y+nBuffer)
-		screenList = addObject(screenList, getDesign("player"), other_player.x, other_player.y+nBuffer)
 
-		# now add the other player
+		# now add the other player if they are in the same room
+		if (other_player!=None and self.name == other_player.roomName):
+			screenList = addObject(screenList, getDesign("player"), other_player.x, other_player.y+nBuffer)
 
 
 		screen=""
