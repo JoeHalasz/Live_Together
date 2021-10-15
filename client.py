@@ -12,12 +12,15 @@ def send_data(s, player, world):
 
 	length = pickle.dumps(len(send))
 	final = length + send
+	print(len(send))
 	s.send(final)
 
 
 def recieve_data(s):
+
 	len_data = s.recv(6) # might need to change this if its a bigger message
 	new_len = pickle.loads(len_data[:6])
+	print(new_len)
 	data = s.recv(new_len) 
 	data = pickle.loads(data)
 	return data.player, data.world
