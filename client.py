@@ -1,12 +1,14 @@
 import pickle
 import threading
 import socket 
+from package import Package
 
 host_ip = '25.13.61.235'
 
-def send_data(s, player):	
+def send_data(s, player, world):	
+	package = Package(player, world)
 	# send message back
-	send = pickle.dumps(player)
+	send = pickle.dumps(package)
 
 	length = pickle.dumps(len(send))
 	final = length + send
@@ -14,12 +16,11 @@ def send_data(s, player):
 
 
 def recieve_data(s):
-	global otherPlayer
-	len_data = s.recv(5) # might need to change this if its a bigger message
-	new_len = pickle.loads(len_data[:5])
+	len_data = s.recv(6) # might need to change this if its a bigger message
+	new_len = pickle.loads(len_data[:6])
 	data = s.recv(new_len) 
 	data = pickle.loads(data)
-	return data
+	return data.player, data.world
 
 
 

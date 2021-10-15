@@ -25,6 +25,9 @@ def movement(player):
 	else:
 		player.design = "player"
 
+	if keyboard.is_pressed('e'):
+		getRoom(player.roomName).deleteObject("small cat")
+
 	if keyboard.is_pressed(" ") and player.y == getRoom(player.roomName).height: # player is on ground and pressed space
 		player.jumpState = 6
 	

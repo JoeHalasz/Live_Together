@@ -37,6 +37,11 @@ class Room:
 		self.height = max(_height,5)
 		self.roomObjects = _roomObjects
 
+	def deleteObject(self, name):
+		for o in self.roomObjects:
+			if o.name == name:
+				self.roomObjects.remove(o)
+
 
 	def drawRoom(self, player, other_player=None):
 		screenList = []
