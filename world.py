@@ -15,8 +15,8 @@ def getRoom(roomName):
 
 def connectRooms(leftRoom, rightRoom):
 	# create the doors
-	doorLeft = Object("door left", getDesign("door left"), 1, rightRoom.height)
-	doorRight = Object("door right", getDesign("door left"), leftRoom.width-3, leftRoom.height) 
+	doorLeft = Object("door left", 1, rightRoom.height)
+	doorRight = Object("door right", leftRoom.width-3, leftRoom.height) 
 
 	# add the doors
 	rightRoom.roomObjects.append(doorLeft)
@@ -31,15 +31,16 @@ def connectRooms(leftRoom, rightRoom):
 
 def loadWorld():
 
-	cat = Object("cat", getDesign("cat"), 50, 12)
-	cat2 = Object("small cat", getDesign("small cat"), 25, 12)
+	cat = Object("cat", 80, 12)
+	cat2 = Object("small cat", 25, 12)
+	gianaTag = Object("Giana's Room", -6, 1, centered=True) # centered means that x=0 is the center of the room instead of the left wall
 
 	cats.append(cat)
 	cats.append(cat2)
 
 	starterRoom = Room("Starter Room", 100,12,[cat, cat2])
-	leftRoom = Room("left Room", 50,8,[])
-	rightRoom = Room("Next Room", 80,20,[])
+	leftRoom = Room("left Room", 50,8,[gianaTag])
+	rightRoom = Room("Next Room", 80,20,[gianaTag])
 
 	connectRooms(leftRoom, starterRoom)
 	connectRooms(starterRoom, rightRoom)

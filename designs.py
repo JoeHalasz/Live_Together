@@ -56,6 +56,5 @@ def getDesign(name, head=""):
 				]
 
 
-	print("Cannot find design " + name)
-	return []
+	return [name]
 

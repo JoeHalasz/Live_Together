@@ -4,13 +4,15 @@ from designs import getDesign
 
 
 
-def addObject(room, add, xpos, ypos):
+def addObject(room, add, xpos, ypos, isCenteredOBJ=False, realRoom=None):
 	objectSplit = []
 	
 	for x in add:
 		lst = (list(x)) # turn the string into a list 
 		objectSplit.insert(0, lst)
 
+	if (isCenteredOBJ):
+		xpos = xpos+int(realRoom.width/2) # move x=0 to the center of the room
 
 	for y in range(len(objectSplit)):
 		for x in range(len(objectSplit[y])):
@@ -57,7 +59,7 @@ class Room:
 
 		# now add all the room objects
 		for o in self.roomObjects:
-			screenList = addObject(screenList, getDesign(o.name), o.x, o.y+nBuffer)
+			screenList = addObject(screenList, getDesign(o.name), o.x, o.y+nBuffer, o.centered, self)
 
 		# now add the player
 		screenList = addObject(screenList, getDesign(player.design, head=player.head), player.x, player.y+nBuffer)
