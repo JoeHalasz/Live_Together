@@ -21,7 +21,7 @@ def recieve_data(s):
 
 	len_data = s.recv(6) # might need to change this if its a bigger message
 	new_len = pickle.loads(len_data[:6])
-	print("Recieved data of size: " str(new_len))
+	print("Recieved data of size: " + str(new_len))
 	data = s.recv(new_len) 
 	data = pickle.loads(data)
 	print(data)
