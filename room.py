@@ -1,5 +1,24 @@
 import os
 import sys
+from designs import getDesign
+
+
+
+def addObject(room, add, xpos, ypos):
+	objectSplit = []
+	
+	for x in add:
+		lst = (list(x)) # turn the string into a list 
+		objectSplit.insert(0, lst)
+
+
+	for y in range(len(objectSplit)):
+		for x in range(len(objectSplit[y])):
+			room[ypos-y] = room[ypos-y][:x+xpos] + objectSplit[y][x] + room[ypos-y][x+xpos+1:]
+			#room[len(room)-(y+1)][x] = objectSplit[y][x]
+	return room
+
+
 
 
 class Room:
@@ -10,61 +29,47 @@ class Room:
 	right = ""
 	roomObjects = [] # a lst of the different objects in the room
 
-	def __init__(self , _name, _width=15, _height=5):
+	def __init__(self , _name, _width=15, _height=5, objects=[]):
 		self.name = _name
 		self.width = max(_width,15)
 		self.height = max(_height,5)
+		self.roomObjects = objects
 
 
 	def drawRoom(self, player, other_player):
-		screen = ""
-		for x in range(30-self.height):
-			screen += '\n'
-		for x in range(self.width):
-			screen += '-'
+		screenList = []
+		nBuffer = 30-self.height
+		for x in range(nBuffer): # white space above roof
+			screenList.append('\n')
+		
+		screenList.append(('-'*self.width)) # roof
+
+		line = ''
+		line += '|'
+		for x in range(self.width-2):
+			line += ' '
+		line += "|"
 
 		for y in range(self.height):
-			screen += '\n'
-			screen += '|'
-			for x in range(self.width-2):
-				if (player!=""):
-					if (x == player.x and y == player.y) or (x == other_player.x and y == other_player.y): # left foot
-						screen += "_"
-					elif (x == player.x+1 and y == player.y) or (x == other_player.x+1 and y == other_player.y): # left leg
-						screen += "/"
-					elif (x == player.x+3 and y == player.y) or (x == other_player.x+3 and y == other_player.y): # right leg
-						screen += "\\"
-					elif (x == player.x+4 and y == player.y) or (x == other_player.x+4 and y == other_player.y): # right foot
-						screen += "_"
+			screenList.append(line) # the walls and inner space except the floor
 
-					elif (x == player.x+2 and y == player.y-1) or (x == other_player.x+2 and y == other_player.y-1): # middle bottom
-						screen += "*"
-					elif (x == player.x+2 and y == player.y-2) or (x == other_player.x+2 and y == other_player.y-2): # middle
-						screen += "*"
+		screenList.append(('-'*self.width)) # floor
 
-					elif (x == player.x+1 and y == player.y-2) or (x == other_player.x+1 and y == other_player.y-2): # left arm
-						screen += "/"
-					elif (x == player.x and y == player.y-2) or (x == other_player.x and y == other_player.y-2): # left hand
-						screen += "_"
-					elif (x == player.x+3 and y == player.y-2) or (x == other_player.x+3 and y == other_player.y-2): # right arm
-						screen += "\\"
-					elif (x == player.x+4 and y == player.y-2) or (x == other_player.x+4 and y == other_player.y-2): # right hand
-						screen += "_"
+		# now add all the room objects
 
-					elif (x == player.x+2 and y == player.y-3) or (x == other_player.x+2 and y == other_player.y-3): # middle top
-						screen += player.head
 
-					else:
-						screen += ' '
-				else:
-					screen += ' '
-			screen += "|"
+		# now add the player
+		screenList = addObject(screenList, getDesign("player"), player.x, player.y+nBuffer)
+		screenList = addObject(screenList, getDesign("player"), other_player.x, other_player.y+nBuffer)
 
-		screen += '\n'
-		for x in range(self.width):
-			screen += '-'
-		screen += '\n'
+		# now add the other player
 
+
+		screen=""
+		for x in screenList:
+			screen += x + "\n"
+		screen += str(player.x) + " " + str(player.y) + "\n"
+		
 		sys.stdout.write("%s" % screen)
 		sys.stdout.flush()
 
