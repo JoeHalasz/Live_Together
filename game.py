@@ -35,7 +35,7 @@ def movement(player):
 
 
 
-def main(player, other_player):
+def game(player, other_player):
 
 	done = movement(player)
 		

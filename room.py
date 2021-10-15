@@ -8,6 +8,7 @@ class Room:
 	height = 0
 	left = ""
 	right = ""
+	roomObjects = [] # a lst of the different objects in the room
 
 	def __init__(self , _name, _width=15, _height=5):
 		self.name = _name
