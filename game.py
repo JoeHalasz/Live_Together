@@ -49,10 +49,10 @@ def movement(player):
 		if (player.holding != None):
 			obj = room.getObject(player.holding)
 			if moved == "left" and obj.x > 2:
-				obj.x -= speed
+				obj.x = player.x
 				my_actions.append(Action("moved", player.roomName, obj))
 			if moved == "right" and obj.x+obj.size[0] < room.width-2:
-				obj.x += speed
+				obj.x = player.x
 				my_actions.append(Action("moved", player.roomName, obj))
 	else:
 		if (player.holding != None):
