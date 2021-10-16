@@ -55,22 +55,24 @@ def loadWorld():
 # this will loop through the other players actions and do them on this clients side
 def dealWithActions(other_actions):
 	for action in other_actions:
-		# if the object moved then just remove the old one and readd the new one 
-		if action.name == "removed" or action.name == "moved":
-			done=False
-			for room in world:
-				for obj in room.roomObjects:
-					if (obj.objectId == action.objId):
-						room.roomObjects.remove(obj)
-						done=True
+		if action != None:
+			# if the object moved then just remove the old one and readd the new one 
+			if action.name == "removed" or action.name == "moved":
+				done=False
+				for room in world:
+					for obj in room.roomObjects:
+						if (obj.objectId == action.objId):
+							room.roomObjects.remove(obj)
+							done=True
+							break
+					if done:
 						break
-				if done:
-					break
 
-		if action.name == "added" or action.name == "moved":
-			getRoom(action.roomName).roomObjects.append(action.obj)
-			if "cat" in action.obj.name:
-				cats.append(action.obj)
+			if action.name == "added" or action.name == "moved":
+				getRoom(action.roomName).roomObjects.append(action.obj)
+				action.obj.beingHeld = False
+				if "cat" in action.obj.name:
+					cats.append(action.obj)
 
 
 def refreshTextures():

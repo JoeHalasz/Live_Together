@@ -20,7 +20,7 @@ class Player:
 	def moveLeft(self, amount=1):
 		room = getRoom(self.roomName)
 		if (self.x == 1 and room.left!=""):
-			self.changeRoom(room.left, room.left.width-7, room.left.height)
+			self.changeRoom(room.left, "right")
 		else:
 			self.x = max(1, self.x-amount)
 		self.head = "<"
@@ -28,7 +28,7 @@ class Player:
 	def moveRight(self, amount=1):
 		room = getRoom(self.roomName)
 		if (self.x == room.width-7 and room.right!=""):
-			self.changeRoom(room.right, 2, room.right.height)
+			self.changeRoom(room.right, "left")
 		else:
 			self.x = min(room.width-7, self.x+amount)
 		self.head = ">"
@@ -44,17 +44,24 @@ class Player:
 		room = getRoom(self.roomName)
 		self.moveUp(amount)
 
-	def changeRoom(self, newRoom, newPosX, newPosY):
+	def changeRoom(self, newRoom, rightOrLeft):
 		room = getRoom(self.roomName)
 		if self.holding != None:
 			holding = room.getObject(self.holding)
 			newRoom.roomObjects.append(holding)
+			holding = newRoom.getObject(self.holding) # now get the new object
 		room.deleteObject(self.holding)
 		if self.holding != None:
-			holding = newRoom.getObject(self.holding) # now get the new object
-			holding.x = newPosX
-			holding.y = newPosY
+			if rightOrLeft == "right":
+				holding.x = newRoom.width - 1 - holding.size[0]
+			else: 
+				holding.x = 1
+			holding.y = newRoom.height
+	
 		self.roomName = newRoom.name
-		self.x = newPosX
-		self.y = newPosY
+		if rightOrLeft == "right": # came in from the right side
+			self.x = newRoom.width - 2 - 5 # player width
+		else: # came in from the left side
+			self.x = 1
+		self.y = newRoom.height
 

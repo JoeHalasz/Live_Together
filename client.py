@@ -26,6 +26,9 @@ def recieve_data(s):
 		except:
 			len_data += s.recv(1)
 			thelen+=1
+			if thelen > 20: # this means that the other player disconnected
+				print("Other player disconnected")
+				quit()
 	data = s.recv(new_len) 
 	data = pickle.loads(data)
 	other_actions = data.actions

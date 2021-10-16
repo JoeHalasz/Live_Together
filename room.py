@@ -83,11 +83,8 @@ class Room:
 		screen=""
 		for x in screenList:
 			screen += x + "\n"
-		screen += str(player.x) + " " + str(player.y) + "\n"
+		#screen += str(player.x) + " " + str(player.y) + "\n"
 		
-		for o in self.roomObjects:
-			screen += str(o.checkCollidingPlayer(player)) + " "
-
 		sys.stdout.write("%s" % screen)
 		sys.stdout.flush()
 
