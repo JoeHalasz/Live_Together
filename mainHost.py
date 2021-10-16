@@ -16,13 +16,13 @@ gameTick = 0
 
 
 while True:
-	global world
-	send_data(s[0], player, world) # the host sends the first bit of data
-	
+	send_data(s[0], player, my_actions) # the host sends the first bit of data
+	my_actions = [] # reset my actions 
 	if (other_player != ""):
 		if game(player, other_player, gameTick):
 			break
 	
-	other_player, world = recieve_data(s[0])
+	other_player = recieve_data(s[0])
+	dealWithActions()
 	gameTick += 1
 	

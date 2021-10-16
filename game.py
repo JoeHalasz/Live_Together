@@ -5,6 +5,9 @@ import keyboard
 from client import *
 from world import getRoom
 from world import refreshWorld
+from action import Action
+
+
 
 fps = 60
 
@@ -26,7 +29,9 @@ def movement(player):
 		player.design = "player"
 
 	if keyboard.is_pressed('e'):
+		other_actions = Action("removed", player.roomName, getRoom(player.roomName).getObject("small cat"))
 		getRoom(player.roomName).deleteObject("small cat")
+
 
 	if keyboard.is_pressed(" ") and player.y == getRoom(player.roomName).height: # player is on ground and pressed space
 		player.jumpState = 6

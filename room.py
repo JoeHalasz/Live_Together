@@ -41,7 +41,12 @@ class Room:
 		for o in self.roomObjects:
 			if o.name == name:
 				self.roomObjects.remove(o)
+				break
 
+	def getObject(self, name):
+		for o in self.roomObjects:
+			if o.name == name:
+				return o
 
 	def drawRoom(self, player, other_player=None):
 		screenList = []

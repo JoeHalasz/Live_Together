@@ -4,6 +4,8 @@ from designs import getDesign
 
 
 world = []
+my_actions = []
+other_actions = []
 cats = []
 catJumpTimer = 0
 
@@ -30,10 +32,9 @@ def connectRooms(leftRoom, rightRoom):
 
 
 def loadWorld():
-
-	cat = Object("cat", 80, 12)
-	cat2 = Object("small cat", 25, 12)
-	gianaTag = Object("Giana's Room", -6, 1, centered=True) # centered means that x=0 is the center of the room instead of the left wall
+	cat = Object("cat", 80, 12,1)
+	cat2 = Object("small cat", 25, 12, 2)
+	gianaTag = Object("Giana's Room", -6, 1, 3, centered=True) # centered means that x=0 is the center of the room instead of the left wall
 
 	cats.append(cat)
 	cats.append(cat2)
@@ -49,7 +50,27 @@ def loadWorld():
 	world.append(leftRoom)
 	world.append(rightRoom)
 
-	
+
+# this will loop through the other players actions and do them on this clients side
+def dealWithActions():
+	global other_actions
+	for action in other_actions:
+		# if the object moved then just remove the old one and readd the new one 
+		if action.name == "removed" or action == "moved": 
+			done=False
+			for room in world:
+				for obj in room.roomObjects:
+					if (obj.objectId == action.obj.objectId):
+						room.roomObjects.remove(obj)
+						done=True
+						break
+				if done:
+					break
+
+		if action == "added" or action == "moved":
+			getRoom(action.roomName).roomObjects.append(action.obj)
+
+	other_actions = []
 
 
 def refreshWorld(gameTick, fps):
