@@ -35,21 +35,20 @@ def loadWorld():
 	cat2 = Object("small cat", 25, 12, 2)
 	gianaTag = Object("Giana's Room", -6, 1, 3, centered=True) # centered means that x=0 is the center of the room instead of the left wall
 	bed = Object("bed", 66, 20, 4)
-	monitor = Object("monitor", 40, 20, 5)
 
 	cats.append(cat)
 	cats.append(cat2)
 
 	starterRoom = Room("Starter Room", 100,12,[cat, cat2])
 	leftRoom = Room("left Room", 50,8,[gianaTag])
-	GianaRoom = Room("Giana Room", 80,20,[gianaTag, bed, monitor])
+	rightRoom = Room("Next Room", 80,20,[gianaTag, bed])
 
 	connectRooms(leftRoom, starterRoom)
-	connectRooms(starterRoom, GianaRoom)
+	connectRooms(starterRoom, rightRoom)
 
 	world.append(starterRoom)
 	world.append(leftRoom)
-	world.append(GianaRoom)
+	world.append(rightRoom)
 
 
 # this will loop through the other players actions and do them on this clients side

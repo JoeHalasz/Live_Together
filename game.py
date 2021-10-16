@@ -20,10 +20,12 @@ def movement(player):
 		refreshTextures()
 	if keyboard.is_pressed('shift'):
 		speed*=2
-	if keyboard.is_pressed('a'): 
-		player.moveLeft(my_actions, speed)
+	if keyboard.is_pressed('a'):  
+		player.moveLeft(speed)
+		moved = "left"
 	if keyboard.is_pressed('d'):
-		player.moveRight(my_actions, speed)
+		player.moveRight(speed)
+		moved = "right"
 	room = getRoom(player.roomName) # the player might have changed rooms
 	if keyboard.is_pressed('s'):
 		player.design = "player crouch"
@@ -44,13 +46,13 @@ def movement(player):
 						player.holding = o.name
 						o.beingHeld = True # this will stop it from doing any animations
 						break
-		# if (player.holding != None):
-		# 	if moved == "left":
-		# 		room.getObject(player.holding).x -= speed
-		# 		my_actions.append(Action("moved", player.roomName, room.getObject(player.holding)))
-		# 	if moved == "right":
-		# 		room.getObject(player.holding).x += speed
-		# 		my_actions.append(Action("moved", player.roomName, room.getObject(player.holding)))
+		if (player.holding != None):
+			if moved == "left":
+				room.getObject(player.holding).x -= speed
+				my_actions.append(Action("moved", player.roomName, room.getObject(player.holding)))
+			if moved == "right":
+				room.getObject(player.holding).x += speed
+				my_actions.append(Action("moved", player.roomName, room.getObject(player.holding)))
 	else:
 		if (player.holding != None):
 			room.getObject(player.holding).beingHeld = False
@@ -61,15 +63,15 @@ def movement(player):
 		player.jumpState = 6
 	
 	if keyboard.is_pressed('q'):
-		player.moveRight(my_actions, speed)
+		player.moveRight(speed)
 		done = True
 
 	if player.jumpState > 0:
-		player.jump(my_actions, .5)
+		player.jump(.5)
 		player.jumpState -= 1
 
 	if (player.jumpState == 0): # this has to happen after jump so that the player hits the ground before next jump
-		player.moveDown(my_actions, .5) # gravity
+		player.moveDown(.5) # gravity
 
 	return done, my_actions
 
