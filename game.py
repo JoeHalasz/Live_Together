@@ -47,12 +47,13 @@ def movement(player):
 						o.beingHeld = True # this will stop it from doing any animations
 						break
 		if (player.holding != None):
-			if moved == "left":
-				room.getObject(player.holding).x -= speed
-				my_actions.append(Action("moved", player.roomName, room.getObject(player.holding)))
-			if moved == "right":
-				room.getObject(player.holding).x += speed
-				my_actions.append(Action("moved", player.roomName, room.getObject(player.holding)))
+			obj = room.getObject(player.holding)
+			if moved == "left" and obj.x > 2:
+				obj.x -= speed
+				my_actions.append(Action("moved", player.roomName, obj))
+			if moved == "right" and obj.x+obj.size[0] < room.width-2:
+				obj.x += speed
+				my_actions.append(Action("moved", player.roomName, obj))
 	else:
 		if (player.holding != None):
 			room.getObject(player.holding).beingHeld = False
