@@ -19,7 +19,12 @@ class Object():
 		self.y = y
 		self.objectId = objectId
 		self.centered = centered
-		self.size = [len(self.design[0]), len(self.design)] # this will be used for collisions
+		maxWidth = 0
+		for line in self.design:
+			if len(line) > maxWidth:
+				maxWidth = len(line)
+
+		self.size = [maxWidth, len(self.design)] # this will be used for collisions
 
 
 
