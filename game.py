@@ -15,25 +15,49 @@ def movement(player):
 	my_actions = []
 	speed = 1
 	done = False
-	
+	moved = "none"
+	room = getRoom(player.roomName)
 	if keyboard.is_pressed('shift'):
 		speed*=2
 	if keyboard.is_pressed('a'):  
 		player.moveLeft(speed)
+		moved = "left"
 	if keyboard.is_pressed('d'):
 		player.moveRight(speed)
+		moved = "right"
 	if keyboard.is_pressed('s'):
 		player.design = "player crouch"
 	else:
 		player.design = "player"
 
-	if keyboard.is_pressed('e'):
-		obj = getRoom(player.roomName).getObject("small cat")
+	if keyboard.is_pressed('r'):
+		obj = room.getObject("small cat")
 		if obj != None:
 			my_actions.append(Action("removed", player.roomName, obj))
-			getRoom(player.roomName).deleteObject("small cat")
+			room.deleteObject("small cat")
 
-	if keyboard.is_pressed(" ") and player.y == getRoom(player.roomName).height: # player is on ground and pressed space
+	if keyboard.is_pressed('e'):
+		if player.holding == None:
+			for o in room.roomObjects:
+				if "door" not in o.name: # dont wanna move doors
+					if o.checkCollidingPlayer(player):
+						player.holding = o.name
+						o.beingHeld = True # this will stop it from doing any animations
+						break
+		if (player.holding != None):
+			if moved == "left":
+				room.getObject(player.holding).x -= speed
+				my_actions.append(Action("moved", player.roomName, room.getObject(player.holding)))
+			if moved == "right":
+				room.getObject(player.holding).x += speed
+				my_actions.append(Action("moved", player.roomName, room.getObject(player.holding)))
+	else:
+		if (player.holding != None):
+			room.getObject(player.holding).beingHeld = False
+			player.holding = None
+
+
+	if keyboard.is_pressed(" ") and player.y == room.height: # player is on ground and pressed space
 		player.jumpState = 6
 	
 	if keyboard.is_pressed('q'):

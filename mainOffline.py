@@ -13,7 +13,7 @@ gameTick = 0
 
 while True:
 	
-	if game(player, None, gameTick):
+	if game(player, None, gameTick)[0]:
 		break
 
 	gameTick += 1

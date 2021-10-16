@@ -8,6 +8,7 @@ class Player:
 	head = "o"
 	jumpState = 0
 	design = "player" # this is for the current design that should be drawn
+	holding = None
 
 
 	def __init__(self, _name, _room):

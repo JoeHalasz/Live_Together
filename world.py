@@ -53,7 +53,7 @@ def loadWorld():
 def dealWithActions(other_actions):
 	for action in other_actions:
 		# if the object moved then just remove the old one and readd the new one 
-		if action.name == "removed" or action == "moved": 
+		if action.name == "removed" or action.name == "moved":
 			done=False
 			for room in world:
 				for obj in room.roomObjects:
@@ -64,7 +64,7 @@ def dealWithActions(other_actions):
 				if done:
 					break
 
-		if action == "added" or action == "moved":
+		if action.name == "added" or action.name == "moved":
 			getRoom(action.roomName).roomObjects.append(action.obj)
 
 
@@ -75,26 +75,28 @@ def refreshWorld(gameTick, fps):
 
 	if (catJumpTimer >= fps*4.8):
 		for cat in cats:
-			if (catJumpTimer == fps*4.8):
-				cat.y -= 1
-			elif (catJumpTimer == fps*4.9):
-				cat.x += 2
-			elif (catJumpTimer == fps*5):
-				cat.y += 1
-			elif (catJumpTimer == fps*5.1):
-				cat.y -= 1
-			elif (catJumpTimer == fps*5.2):
-				cat.x -= 2
-			elif (catJumpTimer == fps*5.3):
-				cat.y += 1
-			elif (catJumpTimer == fps*5.4):
-				catJumpTimer = 0 # reset the cat jump timer
+			if not cat.beingHeld:
+				if (catJumpTimer == fps*4.8):
+					cat.y -= 1
+				elif (catJumpTimer == fps*4.9):
+					cat.x += 2
+				elif (catJumpTimer == fps*5):
+					cat.y += 1
+				elif (catJumpTimer == fps*5.1):
+					cat.y -= 1
+				elif (catJumpTimer == fps*5.2):
+					cat.x -= 2
+				elif (catJumpTimer == fps*5.3):
+					cat.y += 1
+				elif (catJumpTimer == fps*5.4):
+					catJumpTimer = 0 # reset the cat jump timer
 	else:
 		for cat in cats:
-			if (gameTick%fps == 0):
-				cat.x += 1
-			elif (gameTick%fps == fps/2):
-				cat.x -= 1
+			if not cat.beingHeld:
+				if (gameTick%fps == 0):
+					cat.x += 1
+				elif (gameTick%fps == fps/2):
+					cat.x -= 1
 
 		
 

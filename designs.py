@@ -1,6 +1,6 @@
 
 
-def getDesign(name, head=""):
+def getDesign(name, head=" "):
 	if (name == "player"):
 		return ["  "+head+"  ",
 				"_/*\\_",
@@ -20,15 +20,15 @@ def getDesign(name, head=""):
 	if (name == "cat"):
 
 		return [
-				"\\    /\\",
+				"\\    /\\ ",
 				" )  ( ')",
-				"(  /  )",
-				" \\(__)|"
+				"(  /  ) ",
+				" \\(__)| "
 				]
 	if (name == "small cat"):
 
 		return [
-				"\\    /\\",
+				"\\    /\\ ",
 				" )  ( ')",
 				" \\ (__)|"
 				]
