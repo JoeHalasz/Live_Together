@@ -28,8 +28,10 @@ def movement(player):
 		player.design = "player"
 
 	if keyboard.is_pressed('e'):
-		my_actions.append(Action("removed", player.roomName, getRoom(player.roomName).getObject("small cat")))
-		getRoom(player.roomName).deleteObject("small cat")
+		obj = getRoom(player.roomName).getObject("small cat")
+		if obj != None:
+			my_actions.append(Action("removed", player.roomName, obj))
+			getRoom(player.roomName).deleteObject("small cat")
 
 	if keyboard.is_pressed(" ") and player.y == getRoom(player.roomName).height: # player is on ground and pressed space
 		player.jumpState = 6

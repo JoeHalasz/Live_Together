@@ -57,7 +57,7 @@ def dealWithActions(other_actions):
 			done=False
 			for room in world:
 				for obj in room.roomObjects:
-					if (obj.objectId == action.obj.objectId):
+					if (obj.objectId == action.objId):
 						room.roomObjects.remove(obj)
 						done=True
 						break

@@ -31,11 +31,12 @@ class Room:
 	right = ""
 	roomObjects = [] # a lst of the different objects in the room
 
-	def __init__(self , _name, _width=15, _height=5, _roomObjects=[["none",0,0]]):
+	def __init__(self , _name, _width=15, _height=5, _roomObjects=[]):
 		self.name = _name
 		self.width = max(_width,15)
 		self.height = max(_height,5)
 		self.roomObjects = _roomObjects
+
 
 	def deleteObject(self, name):
 		for o in self.roomObjects:
