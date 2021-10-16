@@ -30,16 +30,18 @@ def connectRooms(leftRoom, rightRoom):
 
 
 def loadWorld():
+
 	cat = Object("cat", 80, 12,1)
 	cat2 = Object("small cat", 25, 12, 2)
 	gianaTag = Object("Giana's Room", -6, 1, 3, centered=True) # centered means that x=0 is the center of the room instead of the left wall
+	bed = Object("bed", 66, 20, 4)
 
 	cats.append(cat)
 	cats.append(cat2)
 
 	starterRoom = Room("Starter Room", 100,12,[cat, cat2])
 	leftRoom = Room("left Room", 50,8,[gianaTag])
-	rightRoom = Room("Next Room", 80,20,[gianaTag])
+	rightRoom = Room("Next Room", 80,20,[gianaTag, bed])
 
 	connectRooms(leftRoom, starterRoom)
 	connectRooms(starterRoom, rightRoom)
@@ -66,6 +68,12 @@ def dealWithActions(other_actions):
 
 		if action.name == "added" or action.name == "moved":
 			getRoom(action.roomName).roomObjects.append(action.obj)
+
+
+def refreshTextures():
+	for room in world:
+		for obj in room.roomObjects:
+			obj.design = getDesign(obj.name) # get all the new designs
 
 
 def refreshWorld(gameTick, fps):

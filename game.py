@@ -3,8 +3,7 @@ from player import Player
 from time import sleep
 import keyboard
 from client import *
-from world import getRoom
-from world import refreshWorld
+from world import *
 from action import Action
 
 
@@ -17,6 +16,8 @@ def movement(player):
 	done = False
 	moved = "none"
 	room = getRoom(player.roomName)
+	if keyboard.is_pressed('p'):  
+		refreshTextures()
 	if keyboard.is_pressed('shift'):
 		speed*=2
 	if keyboard.is_pressed('a'):  
@@ -25,6 +26,7 @@ def movement(player):
 	if keyboard.is_pressed('d'):
 		player.moveRight(speed)
 		moved = "right"
+	room = getRoom(player.roomName) # the player might have changed rooms
 	if keyboard.is_pressed('s'):
 		player.design = "player crouch"
 	else:

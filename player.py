@@ -46,6 +46,14 @@ class Player:
 
 	def changeRoom(self, newRoom, newPosX, newPosY):
 		room = getRoom(self.roomName)
+		if self.holding != None:
+			holding = room.getObject(self.holding)
+			newRoom.roomObjects.append(holding)
+		room.deleteObject(self.holding)
+		if self.holding != None:
+			holding = newRoom.getObject(self.holding) # now get the new object
+			holding.x = newPosX
+			holding.y = newPosY
 		self.roomName = newRoom.name
 		self.x = newPosX
 		self.y = newPosY

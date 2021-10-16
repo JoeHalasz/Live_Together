@@ -1,60 +1,22 @@
-
+from os.path import exists
 
 def getDesign(name, head=" "):
-	if (name == "player"):
-		return ["  "+head+"  ",
-				"_/*\\_",
-				"  *  ",
-				"  *  ",
-				"_/ \\_"
-				]
+	fileName = "designs/" + name + ".txt"
 
-	if (name == "player crouch"):
-		return ["  "+head+"  ",
-				"_/*\\_",
-				"  *  ",
-				"_/ \\_"
-				]
-	
+	if exists(fileName):
+		lst = []
+		if (name == "player" or name == "player crouch"):
+			lst.append("  "+head+"  ")
+		# open file and read stuff
+		f = open(fileName, 'r')
+		lines = f.readlines()
+		for line in lines:
+			line=line.replace("\n","").replace("Â","")
+			if (line != ""):
+				lst.append(line)
+		
+		return lst
 
-	if (name == "cat"):
-
-		return [
-				"\\    /\\ ",
-				" )  ( ')",
-				"(  /  ) ",
-				" \\(__)| "
-				]
-	if (name == "small cat"):
-
-		return [
-				"\\    /\\ ",
-				" )  ( ')",
-				" \\ (__)|"
-				]
-
-	if (name == "door left"):
-
-		return [
-				"| ",
-				"| ",
-				"| ",
-				"|*",
-				"| ",
-				"| ",
-				]
-
-	if (name == "door right"):
-
-		return [
-				" |",
-				" |",
-				" |",
-				"*|",
-				" |",
-				" |",
-				]
-
-
-	return [name]
+	else:
+		return [name]
 
