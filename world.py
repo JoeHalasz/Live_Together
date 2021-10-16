@@ -4,8 +4,6 @@ from designs import getDesign
 
 
 world = []
-my_actions = []
-other_actions = []
 cats = []
 catJumpTimer = 0
 
@@ -52,8 +50,7 @@ def loadWorld():
 
 
 # this will loop through the other players actions and do them on this clients side
-def dealWithActions():
-	global other_actions
+def dealWithActions(other_actions):
 	for action in other_actions:
 		# if the object moved then just remove the old one and readd the new one 
 		if action.name == "removed" or action == "moved": 
@@ -69,8 +66,6 @@ def dealWithActions():
 
 		if action == "added" or action == "moved":
 			getRoom(action.roomName).roomObjects.append(action.obj)
-
-	other_actions = []
 
 
 def refreshWorld(gameTick, fps):

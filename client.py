@@ -17,7 +17,6 @@ def send_data(s, player, my_actions):
 
 
 def recieve_data(s):
-	global other_actions
 	len_data = s.recv(5) # might need to change this if its a bigger message
 	thelen = 5
 	while True: # get more data until we have a full message
@@ -30,7 +29,7 @@ def recieve_data(s):
 	data = s.recv(new_len) 
 	data = pickle.loads(data)
 	other_actions = data.actions
-	return data.player
+	return data.player, other_actions
 
 
 

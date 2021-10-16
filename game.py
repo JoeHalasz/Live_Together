@@ -8,15 +8,14 @@ from world import refreshWorld
 from action import Action
 
 
-
 fps = 60
 
 def movement(player):
 	global justJumped
+	my_actions = []
 	speed = 1
 	done = False
 	
-
 	if keyboard.is_pressed('shift'):
 		speed*=2
 	if keyboard.is_pressed('a'):  
@@ -29,9 +28,8 @@ def movement(player):
 		player.design = "player"
 
 	if keyboard.is_pressed('e'):
-		other_actions = Action("removed", player.roomName, getRoom(player.roomName).getObject("small cat"))
+		my_actions.append(Action("removed", player.roomName, getRoom(player.roomName).getObject("small cat")))
 		getRoom(player.roomName).deleteObject("small cat")
-
 
 	if keyboard.is_pressed(" ") and player.y == getRoom(player.roomName).height: # player is on ground and pressed space
 		player.jumpState = 6
@@ -47,7 +45,7 @@ def movement(player):
 	if (player.jumpState == 0): # this has to happen after jump so that the player hits the ground before next jump
 		player.moveDown(.5) # gravity
 
-	return done
+	return done, my_actions
 
 
 
@@ -56,11 +54,11 @@ def game(player, other_player, gameTick):
 
 	refreshWorld(gameTick, fps)
 
-	done = movement(player)
+	done, my_actions = movement(player)
 
 	getRoom(player.roomName).drawRoom(player, other_player)
 
 	sleep(1/fps)
 
-	return done
+	return done, my_actions
 
