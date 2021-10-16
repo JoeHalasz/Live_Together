@@ -1,4 +1,7 @@
 from world import getRoom
+from action import Action
+
+
 
 class Player:
 	name = ""
@@ -17,32 +20,43 @@ class Player:
 		self.y = _room.height-2 # put the player on the floor
 	
 
-	def moveLeft(self, amount=1):
+	def moveLeft(self, my_actions, amount=1):
 		room = getRoom(self.roomName)
 		if (self.x == 1 and room.left!=""):
 			self.changeRoom(room.left, room.left.width-7, room.left.height)
 		else:
 			self.x = max(1, self.x-amount)
 		self.head = "<"
+		self.move_holding(my_actions)
 
-	def moveRight(self, amount=1):
+	def moveRight(self, my_actions, amount=1):
 		room = getRoom(self.roomName)
 		if (self.x == room.width-7 and room.right!=""):
 			self.changeRoom(room.right, 2, room.right.height)
 		else:
 			self.x = min(room.width-7, self.x+amount)
 		self.head = ">"
+		self.move_holding(my_actions)
 
-	def moveUp(self, amount=1):
+	def moveUp(self, my_actions, amount=1):
 		self.y = max(3, self.y-amount)
+		self.move_holding(my_actions)
 
-	def moveDown(self, amount=1):
+	def moveDown(self, my_actions, amount=1):
 		room = getRoom(self.roomName)
 		self.y = min(self.y+amount, room.height)
+		self.move_holding(my_actions)
 
-	def jump(self, amount=1):
+	def move_holding(self, my_actions):
+		if self.holding != None:
+			obj = getRoom(self.roomName).getObject(self.holding)
+			obj.x = self.x
+			obj.y = self.y
+			my_actions.append(Action("moved", self.roomName, obj))
+
+	def jump(self, my_actions, amount=1):
 		room = getRoom(self.roomName)
-		self.moveUp(amount)
+		self.moveUp(my_actions, amount)
 
 	def changeRoom(self, newRoom, newPosX, newPosY):
 		room = getRoom(self.roomName)

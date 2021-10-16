@@ -12,6 +12,7 @@ class Object():
 	size = [0,0]
 	beingHeld = False
 
+
 	def __init__(self,name, x, y, objectId=0, centered=False):
 		self.name = name
 		self.design = getDesign(name)
@@ -20,7 +21,6 @@ class Object():
 		self.objectId = objectId
 		self.centered = centered
 		self.size = [len(self.design[0]), len(self.design)] # this will be used for collisions
-
 
 
 	def checkCollidingPlayer(self, player):
