@@ -20,11 +20,15 @@ def send_data(s, player, world):
 def recieve_data(s):
 
 	len_data = s.recv(6) # might need to change this if its a bigger message
-	print(len_data)
-	try:
-		new_len = pickle.loads(len_data[:6])
-	except:
-		new_len = pickle.loads(len_data[:5])
+	thelen = 6
+	while True:
+		try:
+			print(len_data)
+			new_len = pickle.loads(len_data[:thelen])
+			break
+		except:
+			len_data += s.recv(1)
+			thelen+=1
 	print("Recieved data of size: " + str(new_len))
 	data = s.recv(new_len) 
 	data = pickle.loads(data)
