@@ -70,7 +70,7 @@ class Room:
 
 		# now add all the room objects
 		for o in self.roomObjects:
-			screenList = addObject(screenList, getDesign(o.name), o.x, o.y+nBuffer, o.centered, self)
+			screenList = addObject(screenList, o.getDesign(), o.x, o.y+nBuffer, o.centered, self)
 
 		# now add the player
 		screenList = addObject(screenList, getDesign(player.design, head=player.head), player.x, player.y+nBuffer)

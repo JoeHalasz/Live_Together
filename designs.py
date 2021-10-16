@@ -18,5 +18,7 @@ def getDesign(name, head=" "):
 		return lst
 
 	else:
-		return [name]
+		if "flipped" in name: # if flipped design DNE then return None
+			return None
+		return [name] # else its just a name so return that 
 

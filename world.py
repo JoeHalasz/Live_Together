@@ -1,11 +1,10 @@
 from room import Room
 from object import Object 
-from designs import getDesign
 
 
 world = []
 cats = []
-catJumpTimer = 0
+
 
 def getRoom(roomName):
 	for room in world:
@@ -78,38 +77,48 @@ def dealWithActions(other_actions):
 def refreshTextures():
 	for room in world:
 		for obj in room.roomObjects:
-			obj.design = getDesign(obj.name) # get all the new designs
+			obj.setDesign(obj.name) # get all the new designs
 
 
 def refreshWorld(gameTick, fps):
-	global catJumpTimer
-	
-	catJumpTimer+=1
+	inc = .1 # this is times per second a stage will change 
+	inc *= fps
 
-	if (catJumpTimer >= fps*4.8):
-		for cat in cats:
-			if not cat.beingHeld:
-				if (catJumpTimer == fps*4.8):
-					cat.y -= 1
-				elif (catJumpTimer == fps*4.9):
-					cat.x += 2
-				elif (catJumpTimer == fps*5):
-					cat.y += 1
-				elif (catJumpTimer == fps*5.1):
-					cat.y -= 1
-				elif (catJumpTimer == fps*5.2):
-					cat.x -= 2
-				elif (catJumpTimer == fps*5.3):
-					cat.y += 1
-				elif (catJumpTimer == fps*5.4):
-					catJumpTimer = 0 # reset the cat jump timer
-	else:
-		for cat in cats:
-			if not cat.beingHeld:
-				if (gameTick%fps == 0):
-					cat.x += 1
-				elif (gameTick%fps == fps/2):
-					cat.x -= 1
+	for cat in cats:
+		reset = False
+		if not cat.beingHeld:
+			if cat.actionStage == inc*2:
+				cat.x += 1
+			elif cat.actionStage == inc*4:
+				cat.x -= 1
+			elif cat.actionStage == inc*6:
+				cat.x += 1
+			elif cat.actionStage == inc*8:
+				cat.x -= 1
+			elif cat.actionStage == inc*10:
+				cat.x += 1
+			elif cat.actionStage == inc*12:
+				cat.x -= 1
+			elif cat.actionStage == inc*14:
+				cat.x += 1
+			elif cat.actionStage == inc*16:
+				cat.x -= 1
+			elif cat.actionStage == inc*17:
+				cat.y -= 1
+				cat.x += 1
+			elif cat.actionStage == inc*18:
+				cat.y += 1
+				cat.x += 1
+				cat.actionStage += 1
+			elif cat.actionStage == inc*19:
+				cat.y -= 1
+				cat.x -= 1
+			elif cat.actionStage == inc*20:
+				cat.y += 1
+				cat.x -= 1
+				cat.actionStage = 0
+				cat.flip()
+		cat.actionStage += 1
 
 		
 
