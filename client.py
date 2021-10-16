@@ -10,10 +10,8 @@ def send_data(s, player, world):
 	# send message back
 	send = pickle.dumps(package)
 
-	print("Sending data of length: " + str(len(send)))
 	length = pickle.dumps(len(send))
 	final = length + send
-	print(len(send))
 	s.send(final)
 
 
@@ -23,18 +21,13 @@ def recieve_data(s):
 	thelen = 6
 	while True:
 		try:
-			print(len_data)
 			new_len = pickle.loads(len_data[:thelen])
 			break
 		except:
 			len_data += s.recv(1)
 			thelen+=1
-	print("Recieved data of size: " + str(new_len))
 	data = s.recv(new_len) 
 	data = pickle.loads(data)
-	print(data)
-	print(data.player.name)
-	print(data.world[0].name)
 	return data.player, data.world
 
 
