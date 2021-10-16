@@ -69,6 +69,8 @@ def dealWithActions(other_actions):
 
 		if action.name == "added" or action.name == "moved":
 			getRoom(action.roomName).roomObjects.append(action.obj)
+			if "cat" in action.obj.name:
+				cats.append(action.obj)
 
 
 def refreshTextures():
