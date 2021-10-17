@@ -92,6 +92,9 @@ def movement(player, world):
 		player.design = "player crouch"
 	else:
 		player.design = "player"
+	
+	if keyboard.is_pressed('j'):
+		saveAll(player, world)
 
 	if keyboard.is_pressed('r'):
 		obj = None
