@@ -64,10 +64,10 @@ def recieve_world(s):
 	print(new_len)
 	data = b''
 	while new_len != 0:
-		if new_len > 512: # recv can only get 1024 max i think
-			data += s.recv(512)
+		if new_len > 20: # recv can only get 1024 max i think
+			data += s.recv(20)
 			print(data, end="")
-			new_len -= 512
+			new_len -= 20
 		else:
 			data += s.recv(new_len)
 			new_len = 0
