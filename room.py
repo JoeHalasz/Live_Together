@@ -1,7 +1,7 @@
 import os
 import sys
 from designs import getDesign
-
+from object import Object
 
 
 def addObject(room, add, xpos, ypos, isCenteredOBJ=False, realRoom=None):
@@ -27,20 +27,34 @@ class Room:
 	name = ""
 	width = 0
 	height = 0
-	left = None
-	right = None
+	left = None # this is the actual room object
+	right = None # this is the actual room object
 	roomObjects = [] # a lst of the different objects in the room
 
 	def __init__(self , _name, _width=15, _height=5, _roomObjects=[]):
 		self.name = _name
 		self.width = max(_width,15)
 		self.height = max(_height,5)
+		hasTag = False
+		for o in _roomObjects:
+			if o.name == _name:
+				hasTag = True
+				break
+		if not hasTag:
+			tag = Object(_name, -1*int(len(_name)/2), 1,centered=True)
+			_roomObjects.append(tag)
 		self.roomObjects = _roomObjects
 
 
 	def deleteObject(self, objectId):
 		for o in self.roomObjects:
 			if o.objectId == objectId:
+				self.roomObjects.remove(o)
+				break
+
+	def deleteObjectByName(self, name): # ONLY USE THIS FOR DOORS PLEASE 
+		for o in self.roomObjects:
+			if o.name == name:
 				self.roomObjects.remove(o)
 				break
 

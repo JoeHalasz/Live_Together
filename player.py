@@ -17,35 +17,35 @@ class Player:
 		self.y = _room.height-2 # put the player on the floor
 	
 
-	def moveLeft(self, amount=1):
-		room = getRoom(self.roomName)
+	def moveLeft(self, world, amount=1):
+		room = getRoom(self.roomName, world)
 		if (self.x == 1 and room.left!=None):
-			self.changeRoom(room.left, "right")
+			self.changeRoom(room.left, "right", world)
 		else:
 			self.x = max(1, self.x-amount)
 		self.head = "<"
 
-	def moveRight(self, amount=1):
-		room = getRoom(self.roomName)
+	def moveRight(self, world, amount=1):
+		room = getRoom(self.roomName, world)
 		if (self.x == room.width-7 and room.right!=None):
-			self.changeRoom(room.right, "left")
+			self.changeRoom(room.right, "left", world)
 		else:
 			self.x = min(room.width-7, self.x+amount)
 		self.head = ">"
 
-	def moveUp(self, amount=1):
+	def moveUp(self, world, amount=1):
 		self.y = max(3, self.y-amount)
 
-	def moveDown(self, amount=1):
-		room = getRoom(self.roomName)
+	def moveDown(self, world, amount=1):
+		room = getRoom(self.roomName, world)
 		self.y = min(self.y+amount, room.height)
 
-	def jump(self, amount=1):
-		room = getRoom(self.roomName)
-		self.moveUp(amount)
+	def jump(self, world, amount=1):
+		room = getRoom(self.roomName, world)
+		self.moveUp(world, amount)
 
-	def changeRoom(self, newRoom, rightOrLeft):
-		room = getRoom(self.roomName)
+	def changeRoom(self, newRoom, rightOrLeft, world):
+		room = getRoom(self.roomName, world)
 		if self.holding != None:
 			holding = room.getObject(self.holding)
 			newRoom.roomObjects.append(holding)

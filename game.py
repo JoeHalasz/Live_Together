@@ -10,8 +10,8 @@ from room import Sendroom
 fps = 60
 
 
-def handleHolding(player, moved):
-	room = getRoom(player.roomName)
+def handleHolding(player, moved, world):
+	room = getRoom(player.roomName, world)
 	
 	if keyboard.is_pressed('e'): # this has to happen after all player movement
 		if player.holding == None:
@@ -40,53 +40,54 @@ def handleHolding(player, moved):
 
 
 
-def handleJumps(player):
+def handleJumps(player, world):
 	my_actions = []
 	moved = "none"
-	room = getRoom(player.roomName)
+	room = getRoom(player.roomName, world)
 
 	if keyboard.is_pressed(" ") and player.y == room.height: # player is on ground and pressed space
 		player.jumpState = 6	
 
 	if player.jumpState > 0:
-		player.jump(.5)
+		player.jump(world, .5)
 		player.jumpState -= 1
 		moved = "up"
 
 	if (player.jumpState == 0): # this has to happen after jump so that the player hits the ground before next jump
-		player.moveDown(.5) # gravity
+		player.moveDown(world, .5) # gravity
 		moved = "down"
 
 	return moved
 
 
 
-def movement(player):
+def movement(player, world):
 	speed = 1
 	done = False
-	room = getRoom(player.roomName)
+	try:
+		room = getRoom(player.roomName, world)
+	except:
+		room = world[0]
+		player.roomName = room.name
 	my_actions = []
-	moved = handleJumps(player)
+	moved = handleJumps(player, world)
 
 	if keyboard.is_pressed('p'):
-		refreshTextures()
+		refreshTextures(world)
 	if keyboard.is_pressed('tab'):
-		obj = addNewObject(player)
+		obj, actionName = addNewObject(player, world)
 		if obj != None:
-			if type(obj) is Sendroom:
-				my_actions.append(Action("added room", player.roomName, obj))
-			else:
-				my_actions.append(Action("added object", player.roomName, obj))
+			my_actions.append(Action(actionName, player.roomName, obj))
 
 	if keyboard.is_pressed('shift'):
 		speed*=2
 	if keyboard.is_pressed('a'):  
-		player.moveLeft(speed)
+		player.moveLeft(world, speed)
 		moved = "left"
 	if keyboard.is_pressed('d'):
-		player.moveRight(speed)
+		player.moveRight(world, speed)
 		moved = "right"
-	room = getRoom(player.roomName) # the player might have changed rooms
+	room = getRoom(player.roomName, world) # the player might have changed rooms
 	if keyboard.is_pressed('s'):
 		player.design = "player crouch"
 	else:
@@ -102,15 +103,12 @@ def movement(player):
 		if obj != None:
 			room.deleteObject(obj.objectId)
 			my_actions.append(Action("removed", player.roomName, obj))
-			for o in objects:
-				if o.objectId == obj.objectId:
-					objects.remove(o)
 
 
-	my_actions.append(handleHolding(player, moved))
+	my_actions.append(handleHolding(player, moved, world))
 
 	if keyboard.is_pressed('q'):
-		saveAll(player)
+		saveAll(player, world)
 		done = True
 
 	return done, my_actions
@@ -118,13 +116,13 @@ def movement(player):
 
 
 
-def game(player, other_player, gameTick):
+def game(player, other_player, gameTick, world):
 
-	refreshWorld(gameTick, fps)
+	refreshWorld(gameTick, fps, player, world)
 
-	done, my_actions = movement(player)
+	done, my_actions = movement(player, world)
 
-	getRoom(player.roomName).drawRoom(player, other_player)
+	getRoom(player.roomName, world).drawRoom(player, other_player)
 
 	sleep(1/fps)
 
