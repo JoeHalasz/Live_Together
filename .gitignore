@@ -1,6 +1,6 @@
 save/*
-!save/.gitkeep 
+!save/*.gitkeep 
 world/*
-!world/.gitkeep
+!world/*.gitkeep
 *.pyc
 
