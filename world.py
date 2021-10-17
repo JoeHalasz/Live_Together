@@ -109,7 +109,14 @@ def refreshWorld(gameTick, fps):
 def addNewObject(player): # this will stop the game and prompt the user for a new object
 	global highestId
 	print("Please input the type of object you want to add to the world")
-	name = input() # get the name of the object ( could also be a tag )
+	name = ""
+	while True: # this will ensure that there are no keyboard interupts
+		try:
+			name = input() # get the name of the object ( could also be a tag )
+			break
+		except:
+			pass
+
 	obj = Object(name, player.x, player.y, highestId) # the new object has same pos as player
 	
 	highestId += 1 # add 1 to the highest id

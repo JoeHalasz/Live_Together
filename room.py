@@ -38,15 +38,15 @@ class Room:
 		self.roomObjects = _roomObjects
 
 
-	def deleteObject(self, name):
+	def deleteObject(self, objectId):
 		for o in self.roomObjects:
-			if o.name == name:
+			if o.objectId == objectId:
 				self.roomObjects.remove(o)
 				break
 
-	def getObject(self, name):
+	def getObject(self, objectId):
 		for o in self.roomObjects:
-			if o.name == name:
+			if o.objectId == objectId:
 				return o
 
 	def drawRoom(self, player, other_player=None):

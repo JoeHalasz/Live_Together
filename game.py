@@ -18,7 +18,7 @@ def handleHolding(player, moved):
 			for o in room.roomObjects:
 				if "door" not in o.name: # dont wanna move doors
 					if o.checkCollidingPlayer(player):
-						player.holding = o.name
+						player.holding = o.objectId
 						o.beingHeld = True # this will stop it from doing any animations
 						break
 		if (player.holding != None):
@@ -88,14 +88,21 @@ def movement(player):
 		player.design = "player"
 
 	if keyboard.is_pressed('r'):
-		obj = room.getObject("small cat")
-		try:
-			objects.remove(obj)
-		except:
-			pass
+		obj = None
+		for o in room.roomObjects:
+			if "door" not in o.name: # dont wanna move doors
+				if o.checkCollidingPlayer(player):
+					obj = o
+					break
 		if obj != None:
+			print(obj)
+			for x in objects:
+				print(x)
+			room.deleteObject(obj.objectId)
 			my_actions.append(Action("removed", player.roomName, obj))
-			room.deleteObject("small cat")
+			for o in objects:
+				if o.objectId == obj.objectId:
+					objects.remove(o)
 
 
 	my_actions.append(handleHolding(player, moved))
