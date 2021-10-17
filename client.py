@@ -40,6 +40,7 @@ def send_world(s, world):
 	send = pickle.dumps(world)
 	length = pickle.dumps(len(send))
 	final = length + send
+	print(data)
 	print(len(send))
 	s.send(final)
 
@@ -58,6 +59,7 @@ def recieve_world(s):
 				save("save/" + player.name, player) # dont save the empty world. just the player
 				quit()
 	data = s.recv(new_len)
+	print(data)
 	print(new_len)
 	world = pickle.loads(data)
 	return loadWorld(world)[0]
