@@ -95,9 +95,6 @@ def movement(player):
 					obj = o
 					break
 		if obj != None:
-			print(obj)
-			for x in objects:
-				print(x)
 			room.deleteObject(obj.objectId)
 			my_actions.append(Action("removed", player.roomName, obj))
 			for o in objects:
