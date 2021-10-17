@@ -61,11 +61,8 @@ def recieve_world(s):
 				quit()
 	data = s.recv(new_len) 
 	world = pickle.loads(data)
-	print("HERE")
-	print(new_len)
-	print(data)
-	print(world)
-	loadWorld(world)
+	return loadWorld(world)[0]
+
 
 
 

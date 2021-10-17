@@ -3,13 +3,13 @@ from client import *
 from game import game
 from world import *
 
-player, world = loadWorld() # load the world
 # connect with server 
 s = connect()
+player = recieve_world(s) # this will download the world from the other player
 
 gameTick = 0
 my_actions = []
-recieve_world(s) # this will download the world from the other player
+
 
 while True:
 	other_player, other_actions = recieve_data(s, player) # the client recieves the first bit of data

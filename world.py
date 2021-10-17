@@ -86,9 +86,6 @@ def loadWorld(recieved=None):
 			highest = max(highestId, obj.objectId)
 	highestId = highest + 1
 	player = getPlayer()
-	print("here")
-	print(player.roomName)
-	print(getRoom(player.roomName))
 	return player, world
 
 # this will loop through the other players actions and do them on this clients side
