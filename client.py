@@ -40,9 +40,6 @@ def send_world(s, world):
 	send = pickle.dumps(world)
 	length = pickle.dumps(len(send))
 	final = length + send
-	print("SENDING WORLD")
-	print(len(send))
-	print(send)
 	s.send(final)
 
 def recieve_world(s):
@@ -59,7 +56,8 @@ def recieve_world(s):
 				print("Other player disconnected")
 				save("save/" + player.name, player) # dont save the empty world. just the player
 				quit()
-	data = s.recv(new_len) 
+	data = s.recv(new_len)
+	print(new_len)
 	world = pickle.loads(data)
 	return loadWorld(world)[0]
 
