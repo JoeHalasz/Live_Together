@@ -62,7 +62,6 @@ def handleJumps(player):
 
 
 def movement(player):
-	global justJumped
 	speed = 1
 	done = False
 	room = getRoom(player.roomName)
@@ -99,7 +98,7 @@ def movement(player):
 	my_actions.append(handleHolding(player, moved))
 
 	if keyboard.is_pressed('q'):
-		save()
+		save(player)
 		done = True
 
 	return done, my_actions

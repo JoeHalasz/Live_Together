@@ -17,7 +17,7 @@ def send_data(s, player, my_actions):
 	
 
 
-def recieve_data(s):
+def recieve_data(s, player): # need player just incase we need to save
 	len_data = s.recv(5) # might need to change this if its a bigger message
 	thelen = 5
 	while True: # get more data until we have a full message
@@ -29,7 +29,7 @@ def recieve_data(s):
 			thelen+=1
 			if thelen > 20: # this means that the other player disconnected
 				print("Other player disconnected")
-				save()
+				save(player)
 				quit()
 	data = s.recv(new_len) 
 	data = pickle.loads(data)

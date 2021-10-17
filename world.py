@@ -1,6 +1,8 @@
 from room import Room
 from object import Object 
-
+import pickle
+from os.path import exists
+import sys
 
 world = []
 objects = []
@@ -128,8 +130,27 @@ def refreshWorld(gameTick, fps):
 			o.actionStage += 1
 
 
-def save():
-	global player
-	f = open('./put/your/path/here.png', 'wb')
-	f.write(data)
+def getPlayer():
+
+	if len(sys.argv) < 2:
+		print("Please provide a username")
+		quit()
+
+	username = sys.argv[1].lower()
+	if exists("save/"+username):
+		return load("save/"+username)
+	else:
+		return Player(username, getRoom("starterRoom"))
+
+
+def load(filename):
+	data = b""
+	with open(filename, mode='rb') as file: 
+		data = file.read()
+	return pickle.loads(data)
+
+
+def save(player):
+	f = open('save/'+player.name, 'wb')
+	f.write(pickle.dumps(player))
 	f.close()

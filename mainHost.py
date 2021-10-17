@@ -3,15 +3,14 @@ from client import *
 from host import host
 from game import game
 from world import *
-from player import Player
 
 
-justJumped=False
 loadWorld() # create the world
+player = getPlayer()
 # connect with server 
 s = host()
 other_player = ""
-player = Player("Joe", getRoom("starterRoom"))
+
 gameTick = 0
 my_actions = []
 
@@ -23,7 +22,7 @@ while True:
 		if breaking:
 			break
 	
-	other_player, other_actions = recieve_data(s[0])
+	other_player, other_actions = recieve_data(s[0], player)
 	dealWithActions(other_actions)
 	gameTick += 1
 	

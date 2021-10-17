@@ -4,10 +4,8 @@ from game import game
 from world import *
 from player import Player
 
-justJumped=False
 loadWorld() # create the world
-# connect with server 
-player = Player("Joe", getRoom("starterRoom"))
+player = getPlayer()
 gameTick = 0
 
 
