@@ -40,6 +40,7 @@ def send_world(s, world):
 	send = pickle.dumps(world)
 	length = pickle.dumps(len(send))
 	final = length + send
+	print(len(send))
 	s.send(final)
 
 def recieve_world(s):
