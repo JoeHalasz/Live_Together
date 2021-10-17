@@ -68,8 +68,11 @@ def movement(player):
 	my_actions = []
 	moved = handleJumps(player)
 
-	if keyboard.is_pressed('p'):  
+	if keyboard.is_pressed('p'):
 		refreshTextures()
+	if keyboard.is_pressed('tab'):
+		obj = addNewObject(player)
+		my_actions.append(Action("added", player.roomName, obj))
 	if keyboard.is_pressed('shift'):
 		speed*=2
 	if keyboard.is_pressed('a'):  

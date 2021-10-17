@@ -3,10 +3,12 @@ from object import Object
 import pickle
 from os.path import exists
 import sys
+from catBehavior import catMovement
 
 
 world = []
 objects = []
+highestId = 0
 
 
 def getRoom(roomName):
@@ -35,12 +37,13 @@ def connectRooms(leftRoom, rightRoom):
 
 
 def loadWorld():
-
+	global highestId
 	cat = Object("cat", 80, 12,1)
 	cat2 = Object("small cat", 25, 12, 2)
 	gianaTag = Object("Giana's Room", -6, 1, 3, centered=True) # centered means that x=0 is the center of the room instead of the left wall
 	bed = Object("bed", 66, 20, 4)
 	monitor = Object("monitor", 45, 20, 5)
+	highestId = 100
 
 	objects.append(cat)
 	objects.append(cat2)
@@ -97,41 +100,25 @@ def refreshWorld(gameTick, fps):
 	inc *= fps
 
 	for o in objects:
-		if "cat" in o.name:
-			reset = False
-			if not o.beingHeld:
-				if o.actionStage == inc*2:
-					o.x += 1
-				elif o.actionStage == inc*4:
-					o.x -= 1
-				elif o.actionStage == inc*6:
-					o.x += 1
-				elif o.actionStage == inc*8:
-					o.x -= 1
-				elif o.actionStage == inc*10:
-					o.x += 1
-				elif o.actionStage == inc*12:
-					o.x -= 1
-				elif o.actionStage == inc*14:
-					o.x += 1
-				elif o.actionStage == inc*16:
-					o.x -= 1
-				elif o.actionStage == inc*17:
-					o.y -= 1
-					o.x += 1
-				elif o.actionStage == inc*18:
-					o.y += 1
-					o.x += 1
-					o.actionStage += 1
-				elif o.actionStage == inc*19:
-					o.y -= 1
-					o.x -= 1
-				elif o.actionStage == inc*20:
-					o.y += 1
-					o.x -= 1
-					o.actionStage = 0
-					o.flip()
-			o.actionStage += 1
+		if "cat" in o.name or "cat" == o.name:
+			catMovement(o, inc)
+
+
+
+
+def addNewObject(player): # this will stop the game and prompt the user for a new object
+	global highestId
+	print("Please input the type of object you want to add to the world")
+	name = input() # get the name of the object ( could also be a tag )
+	obj = Object(name, player.x, player.y, highestId) # the new object has same pos as player
+	
+	highestId += 1 # add 1 to the highest id
+	objects.append(obj) # add to objects
+	getRoom(player.roomName).roomObjects.append(obj) # add to the room we are in 
+	return obj
+	
+
+
 
 
 def getPlayer():
