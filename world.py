@@ -4,6 +4,7 @@ import pickle
 from os.path import exists
 import sys
 
+
 world = []
 objects = []
 
@@ -12,6 +13,9 @@ def getRoom(roomName):
 	for room in world:
 		if room.name.replace(" ", "").lower() == roomName.replace(" ", "").lower():
 			return room
+
+
+from player import Player # THIS HAS TO BE BELOW getRoom
 
 
 def connectRooms(leftRoom, rightRoom):
