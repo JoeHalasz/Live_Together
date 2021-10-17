@@ -27,8 +27,8 @@ class Room:
 	name = ""
 	width = 0
 	height = 0
-	left = ""
-	right = ""
+	left = None
+	right = None
 	roomObjects = [] # a lst of the different objects in the room
 
 	def __init__(self , _name, _width=15, _height=5, _roomObjects=[]):
@@ -89,3 +89,14 @@ class Room:
 		sys.stdout.write("%s" % screen)
 		sys.stdout.flush()
 
+
+
+class Sendroom():
+	whichSide = None
+	connectedRoom = None
+	room = None
+
+	def __init__(self, room, connectedRoom, whichSide):
+		self.room = room
+		self.connectedRoom = connectedRoom
+		self.whichSide = whichSide

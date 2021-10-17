@@ -4,7 +4,7 @@ import pickle
 from os.path import exists
 import sys
 from catBehavior import catMovement
-
+from room import Sendroom
 
 world = []
 objects = []
@@ -17,6 +17,9 @@ def getRoom(roomName):
 			return room
 	print()
 	print("ERROR Could not find room " + roomName)
+	print("rooms are:")
+	for r in world:
+		print(r.name)
 	quit()
 
 
@@ -62,7 +65,7 @@ def fix_world():
 	world.append(starterRoom)
 	world.append(leftRoom)
 	world.append(gianaRoom)
-	return getPlayer()
+	return getPlayer(), world
 
 
 def loadWorld(recieved=None):
@@ -108,10 +111,19 @@ def dealWithActions(other_actions):
 					if done:
 						break
 
-			if action.name == "added" or action.name == "moved":
+			if action.name == "added object" or action.name == "moved":
 				getRoom(action.roomName).roomObjects.append(action.obj)
 				action.obj.beingHeld = False
 				objects.append(action.obj)
+
+			if "added room" in action.name:
+				# action.obj is a room object
+				roomData = action.obj
+				world.append(roomData.room)
+				if roomData.whichSide == "left":
+					connectRooms(roomData.room, roomData.connectedRoom)
+				else:
+					connectRooms(roomData.connectedRoom, roomData.room)
 
 
 def refreshTextures():
@@ -134,6 +146,7 @@ def refreshWorld(gameTick, fps):
 def addNewObject(player): # this will stop the game and prompt the user for a new object
 	global highestId
 	print("Please input the type of object you want to add to the world")
+	print("If adding a room format it like this: room (left or right), roomName, width, height")
 	name = ""
 	while True: # this will ensure that there are no keyboard interupts
 		try:
@@ -142,12 +155,29 @@ def addNewObject(player): # this will stop the game and prompt the user for a ne
 		except:
 			pass
 
-	obj = Object(name, player.x, player.y, highestId) # the new object has same pos as player
-	
-	highestId += 1 # add 1 to the highest id
-	objects.append(obj) # add to objects
-	getRoom(player.roomName).roomObjects.append(obj) # add to the room we are in 
-	return obj
+	if "door" not in name:
+		if "room" in name:
+			playerRoom = getRoom(player.roomName)
+			roomParts = name.split(",")
+			newRoom = Room(roomParts[1], int(roomParts[2]), int(roomParts[3]))
+			if "left" in name: # add it to the left of this room if available
+				if playerRoom.left == None:
+					connectRooms(newRoom, playerRoom) # this will make the doors too
+					world.append(newRoom)
+					return Sendroom(newRoom, playerRoom, "left")
+			else: # add it to the right
+				if playerRoom.right == None:
+					connectRooms(playerRoom, newRoom) # this will make the doors too
+					world.append(newRoom)
+					return Sendroom(newRoom, playerRoom, "right")
+
+		else:
+			obj = Object(name, player.x, player.y, highestId) # the new object has same pos as player
+			
+			highestId += 1 # add 1 to the highest id
+			objects.append(obj) # add to objects
+			getRoom(player.roomName).roomObjects.append(obj) # add to the room we are in 
+		return obj
 	
 
 

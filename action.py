@@ -10,4 +10,7 @@ class Action():
 		self.name = name # removed, moved, added
 		self.roomName = roomName
 		self.obj = obj
-		self.objId = obj.objectId
+		try:
+			self.objId = obj.objectId
+		except: # this means its a room
+			self.objectId = -1

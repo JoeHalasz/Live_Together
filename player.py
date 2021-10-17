@@ -19,7 +19,7 @@ class Player:
 
 	def moveLeft(self, amount=1):
 		room = getRoom(self.roomName)
-		if (self.x == 1 and room.left!=""):
+		if (self.x == 1 and room.left!=None):
 			self.changeRoom(room.left, "right")
 		else:
 			self.x = max(1, self.x-amount)
@@ -27,7 +27,7 @@ class Player:
 
 	def moveRight(self, amount=1):
 		room = getRoom(self.roomName)
-		if (self.x == room.width-7 and room.right!=""):
+		if (self.x == room.width-7 and room.right!=None):
 			self.changeRoom(room.right, "left")
 		else:
 			self.x = min(room.width-7, self.x+amount)

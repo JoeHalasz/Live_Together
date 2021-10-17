@@ -5,7 +5,7 @@ import keyboard
 from client import *
 from world import *
 from action import Action
-
+from room import Sendroom
 
 fps = 60
 
@@ -72,7 +72,12 @@ def movement(player):
 		refreshTextures()
 	if keyboard.is_pressed('tab'):
 		obj = addNewObject(player)
-		my_actions.append(Action("added", player.roomName, obj))
+		if obj != None:
+			if type(obj) is Sendroom:
+				my_actions.append(Action("added room", player.roomName, obj))
+			else:
+				my_actions.append(Action("added object", player.roomName, obj))
+
 	if keyboard.is_pressed('shift'):
 		speed*=2
 	if keyboard.is_pressed('a'):  
