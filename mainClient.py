@@ -8,7 +8,6 @@ player = getPlayer()
 # connect with server 
 s = connect()
 
-player.x = 50
 gameTick = 0
 my_actions = []
 

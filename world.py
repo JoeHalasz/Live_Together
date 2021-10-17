@@ -148,13 +148,18 @@ def getPlayer():
 
 
 def load(filename):
-	data = b""
-	with open(filename, mode='rb') as file: 
-		data = file.read()
+	f = open(filename, mode='rb')
+	data = f.read()
+	f.close()
 	return pickle.loads(data)
 
 
-def save(player):
-	f = open('save/'+player.name, 'wb')
-	f.write(pickle.dumps(player))
+def saveAll(player):
+	save("save/" + player.name, player)
+	# save the world
+
+
+def save(name, thing):
+	f = open(name, 'wb')
+	f.write(pickle.dumps(thing))
 	f.close()

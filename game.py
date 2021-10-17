@@ -98,7 +98,7 @@ def movement(player):
 	my_actions.append(handleHolding(player, moved))
 
 	if keyboard.is_pressed('q'):
-		save(player)
+		saveAll(player)
 		done = True
 
 	return done, my_actions

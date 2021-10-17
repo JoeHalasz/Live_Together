@@ -29,7 +29,7 @@ def recieve_data(s, player): # need player just incase we need to save
 			thelen+=1
 			if thelen > 20: # this means that the other player disconnected
 				print("Other player disconnected")
-				save(player)
+				saveAll(player)
 				quit()
 	data = s.recv(new_len) 
 	data = pickle.loads(data)
