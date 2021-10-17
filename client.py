@@ -2,6 +2,7 @@ import pickle
 import threading
 import socket 
 from package import Package
+from world import save
 
 host_ip = '25.13.61.235'
 
@@ -28,6 +29,7 @@ def recieve_data(s):
 			thelen+=1
 			if thelen > 20: # this means that the other player disconnected
 				print("Other player disconnected")
+				save()
 				quit()
 	data = s.recv(new_len) 
 	data = pickle.loads(data)

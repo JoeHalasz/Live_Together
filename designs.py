@@ -14,6 +14,7 @@ def getDesign(name, head=" "):
 			line=line.replace("\n","").replace("Â","")
 			if (line != ""):
 				lst.append(line)
+		f.close()
 		
 		return lst
 

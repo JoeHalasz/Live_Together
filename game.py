@@ -23,14 +23,15 @@ def handleHolding(player, moved):
 						break
 		if (player.holding != None):
 			obj = room.getObject(player.holding)
-			if moved == "left" and obj.x > 2:
-				obj.x = player.x
-			if moved == "right" and obj.x+obj.size[0] < room.width-2:
-				obj.x = player.x
-			if moved != "none":
-				if obj.y > 1:
-					obj.y = player.y
-				return Action("moved", player.roomName, obj)
+			if obj != None: # make sure that the other player did not move the object to another room
+				if moved == "left" and obj.x > 2:
+					obj.x = player.x
+				if moved == "right" and obj.x+obj.size[0] < room.width-2:
+					obj.x = player.x
+				if moved != "none":
+					if obj.y > 1:
+						obj.y = player.y
+					return Action("moved", player.roomName, obj)
 
 	else:
 		if (player.holding != None):
@@ -86,16 +87,19 @@ def movement(player):
 
 	if keyboard.is_pressed('r'):
 		obj = room.getObject("small cat")
+		try:
+			objects.remove(obj)
+		except:
+			pass
 		if obj != None:
 			my_actions.append(Action("removed", player.roomName, obj))
 			room.deleteObject("small cat")
 
-	
+
 	my_actions.append(handleHolding(player, moved))
 
-
 	if keyboard.is_pressed('q'):
-		player.moveRight(speed)
+		save()
 		done = True
 
 	return done, my_actions

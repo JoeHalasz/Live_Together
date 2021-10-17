@@ -3,7 +3,7 @@ from object import Object
 
 
 world = []
-cats = []
+objects = []
 
 
 def getRoom(roomName):
@@ -36,8 +36,11 @@ def loadWorld():
 	bed = Object("bed", 66, 20, 4)
 	monitor = Object("monitor", 45, 20, 5)
 
-	cats.append(cat)
-	cats.append(cat2)
+	objects.append(cat)
+	objects.append(cat2)
+	objects.append(gianaTag)
+	objects.append(bed)
+	objects.append(monitor)
 
 	starterRoom = Room("Starter Room", 100,12,[cat, cat2])
 	leftRoom = Room("left Room", 50,8,[gianaTag])
@@ -61,6 +64,10 @@ def dealWithActions(other_actions):
 				for room in world:
 					for obj in room.roomObjects:
 						if (obj.objectId == action.objId):
+							for o in objects: # delete object from objects
+								if o.name == obj.name:
+									objects.remove(o)
+
 							room.roomObjects.remove(obj)
 							done=True
 							break
@@ -70,8 +77,7 @@ def dealWithActions(other_actions):
 			if action.name == "added" or action.name == "moved":
 				getRoom(action.roomName).roomObjects.append(action.obj)
 				action.obj.beingHeld = False
-				if "cat" in action.obj.name:
-					cats.append(action.obj)
+				objects.append(action.obj)
 
 
 def refreshTextures():
@@ -84,42 +90,46 @@ def refreshWorld(gameTick, fps):
 	inc = .1 # this is times per second a stage will change 
 	inc *= fps
 
-	for cat in cats:
-		reset = False
-		if not cat.beingHeld:
-			if cat.actionStage == inc*2:
-				cat.x += 1
-			elif cat.actionStage == inc*4:
-				cat.x -= 1
-			elif cat.actionStage == inc*6:
-				cat.x += 1
-			elif cat.actionStage == inc*8:
-				cat.x -= 1
-			elif cat.actionStage == inc*10:
-				cat.x += 1
-			elif cat.actionStage == inc*12:
-				cat.x -= 1
-			elif cat.actionStage == inc*14:
-				cat.x += 1
-			elif cat.actionStage == inc*16:
-				cat.x -= 1
-			elif cat.actionStage == inc*17:
-				cat.y -= 1
-				cat.x += 1
-			elif cat.actionStage == inc*18:
-				cat.y += 1
-				cat.x += 1
-				cat.actionStage += 1
-			elif cat.actionStage == inc*19:
-				cat.y -= 1
-				cat.x -= 1
-			elif cat.actionStage == inc*20:
-				cat.y += 1
-				cat.x -= 1
-				cat.actionStage = 0
-				cat.flip()
-		cat.actionStage += 1
+	for o in objects:
+		if "cat" in o.name:
+			reset = False
+			if not o.beingHeld:
+				if o.actionStage == inc*2:
+					o.x += 1
+				elif o.actionStage == inc*4:
+					o.x -= 1
+				elif o.actionStage == inc*6:
+					o.x += 1
+				elif o.actionStage == inc*8:
+					o.x -= 1
+				elif o.actionStage == inc*10:
+					o.x += 1
+				elif o.actionStage == inc*12:
+					o.x -= 1
+				elif o.actionStage == inc*14:
+					o.x += 1
+				elif o.actionStage == inc*16:
+					o.x -= 1
+				elif o.actionStage == inc*17:
+					o.y -= 1
+					o.x += 1
+				elif o.actionStage == inc*18:
+					o.y += 1
+					o.x += 1
+					o.actionStage += 1
+				elif o.actionStage == inc*19:
+					o.y -= 1
+					o.x -= 1
+				elif o.actionStage == inc*20:
+					o.y += 1
+					o.x -= 1
+					o.actionStage = 0
+					o.flip()
+			o.actionStage += 1
 
-		
 
-
+def save():
+	global player
+	f = open('./put/your/path/here.png', 'wb')
+	f.write(data)
+	f.close()
