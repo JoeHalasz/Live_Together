@@ -40,7 +40,6 @@ def recieve_data(s, player, world): # need player just incase we need to save
 			data += s.recv(new_len)
 			new_len = 0
 	
-	data = s.recv(new_len) 
 	data = pickle.loads(data)
 	other_actions = data.actions
 	return data.player, other_actions
