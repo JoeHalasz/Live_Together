@@ -4,8 +4,7 @@ from game import game
 from world import *
 from player import Player
 
-loadWorld() # create the world
-player = getPlayer()
+player, world = loadWorld() # load the world
 gameTick = 0
 
 

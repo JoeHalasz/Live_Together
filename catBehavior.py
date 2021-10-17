@@ -32,6 +32,7 @@ def catMovement(o, inc):
 		elif o.actionStage == inc*20:
 			o.y += 1
 			o.x -= 1
-			o.actionStage = 0
 			o.flip()
 	o.actionStage += 1
+	if o.actionStage > inc*20:
+		o.actionStage = 0

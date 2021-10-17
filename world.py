@@ -8,13 +8,16 @@ from catBehavior import catMovement
 
 world = []
 objects = []
-highestId = 0
+highestId = 100
 
 
 def getRoom(roomName):
 	for room in world:
 		if room.name.replace(" ", "").lower() == roomName.replace(" ", "").lower():
 			return room
+	print()
+	print("ERROR Could not find room " + roomName)
+	quit()
 
 
 from player import Player # THIS HAS TO BE BELOW getRoom
@@ -34,10 +37,8 @@ def connectRooms(leftRoom, rightRoom):
 	leftRoom.right = rightRoom
 
 
-
-
-def loadWorld():
-	global highestId
+def fix_world():
+	global highestId 
 	cat = Object("cat", 80, 12,1)
 	cat2 = Object("small cat", 25, 12, 2)
 	gianaTag = Object("Giana's Room", -6, 1, 3, centered=True) # centered means that x=0 is the center of the room instead of the left wall
@@ -61,7 +62,34 @@ def loadWorld():
 	world.append(starterRoom)
 	world.append(leftRoom)
 	world.append(gianaRoom)
+	return getPlayer()
 
+
+def loadWorld(recieved=None):
+	# return fix_world()
+	global highestId 
+	global world
+	if recieved == None:
+		world = load("world/world.wld")
+	else:
+		world = recieved
+
+	# remember to update highestId for new objects
+	highest = 0
+	for room in world:
+		print()
+		print(room.name)
+		for obj in room.roomObjects:
+			print(obj.name + " [" + str(obj.x) + " " + str(obj.y) + "]")
+			if "door" not in obj.name:
+				objects.append(obj)
+			highest = max(highestId, obj.objectId)
+	highestId = highest + 1
+	player = getPlayer()
+	print("here")
+	print(player.roomName)
+	print(getRoom(player.roomName))
+	return player, world
 
 # this will loop through the other players actions and do them on this clients side
 def dealWithActions(other_actions):
@@ -150,7 +178,7 @@ def load(filename):
 
 def saveAll(player):
 	save("save/" + player.name, player)
-	# save the world
+	save("world/world.wld", world)
 
 
 def save(name, thing):

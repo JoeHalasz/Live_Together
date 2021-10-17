@@ -2,7 +2,7 @@ import pickle
 import threading
 import socket 
 from package import Package
-from world import save
+from world import save, loadWorld, saveAll
 
 host_ip = '25.13.61.235'
 
@@ -15,8 +15,6 @@ def send_data(s, player, my_actions):
 	final = length + send
 	s.send(final)
 	
-
-
 def recieve_data(s, player): # need player just incase we need to save
 	len_data = s.recv(5) # might need to change this if its a bigger message
 	thelen = 5
@@ -35,6 +33,40 @@ def recieve_data(s, player): # need player just incase we need to save
 	data = pickle.loads(data)
 	other_actions = data.actions
 	return data.player, other_actions
+
+
+
+def send_world(s, world):
+	send = pickle.dumps(world)
+	length = pickle.dumps(len(send))
+	final = length + send
+	print("SENDING WORLD")
+	print(len(send))
+	print(send)
+	s.send(final)
+
+def recieve_world(s):
+	len_data = s.recv(5) # might need to change this if its a bigger message
+	thelen = 5
+	while True: # get more data until we have a full message
+		try:
+			new_len = pickle.loads(len_data[:thelen])
+			break
+		except:
+			len_data += s.recv(1)
+			thelen+=1
+			if thelen > 20: # this means that the other player disconnected
+				print("Other player disconnected")
+				save("save/" + player.name, player) # dont save the empty world. just the player
+				quit()
+	data = s.recv(new_len) 
+	world = pickle.loads(data)
+	print("HERE")
+	print(new_len)
+	print(data)
+	print(world)
+	loadWorld(world)
+
 
 
 
