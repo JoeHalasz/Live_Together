@@ -40,24 +40,26 @@ def send_world(s, world):
 	send = pickle.dumps(world)
 	length = pickle.dumps(len(send))
 	final = length + send
-	print(data)
+	print(send)
 	print(len(send))
 	s.send(final)
 
 def recieve_world(s):
-	len_data = s.recv(5) # might need to change this if its a bigger message
-	thelen = 5
-	while True: # get more data until we have a full message
-		try:
-			new_len = pickle.loads(len_data[:thelen])
-			break
-		except:
-			len_data += s.recv(1)
-			thelen+=1
-			if thelen > 20: # this means that the other player disconnected
-				print("Other player disconnected")
-				save("save/" + player.name, player) # dont save the empty world. just the player
-				quit()
+	thelen = 6
+	len_data = s.recv(thelen) # might need to change this if its a bigger message
+	
+	# while True: # get more data until we have a full message
+	# 	try:
+	new_len = pickle.loads(len_data[:thelen])
+	print(new_len)
+		# 	break
+		# except:
+		# 	len_data += s.recv(1)
+		# 	thelen+=1
+		# 	if thelen > 20: # this means that the other player disconnected
+		# 		print("Other player disconnected")
+		# 		save("save/" + player.name, player) # dont save the empty world. just the player
+		# 		quit()
 	data = s.recv(new_len)
 	print(data)
 	print(new_len)
