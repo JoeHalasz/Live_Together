@@ -29,6 +29,17 @@ def recieve_data(s, player, world): # need player just incase we need to save
 				print("Other player disconnected")
 				saveAll(player, world)
 				quit()
+	
+	data = b''
+	while new_len != 0:
+		if new_len > 20: # recv can only get 1024 max i think
+			data += s.recv(20)
+			print(data, end="")
+			new_len -= 20
+		else:
+			data += s.recv(new_len)
+			new_len = 0
+	
 	data = s.recv(new_len) 
 	data = pickle.loads(data)
 	other_actions = data.actions
