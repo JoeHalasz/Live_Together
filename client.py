@@ -12,7 +12,9 @@ HEADERSIZE = 20
 def send_data_helper(s, data):
 	send = pickle.dumps(data)
 
-	length = pickle.dumps(f'{(len(send)):<{HEADERSIZE}}')
+	length = pickle.dumps(len(send))
+	while len(length) < HEADERSIZE:
+		length += b' '
 	print(len(length))
 	s.send(length)
 	print(length)
