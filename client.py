@@ -32,7 +32,7 @@ def send_data(s, player, my_actions):
 	
 
 def recieve_data_helper(s):
-	len_data = s.recv(HEADERSIZE*2) # might need to change this if its a bigger message
+	len_data = s.recv(HEADERSIZE) # might need to change this if its a bigger message
 	print(len_data)
 	print(len(len_data))
 	new_len = int(pickle.loads(len_data))
