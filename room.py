@@ -107,7 +107,7 @@ class Room:
 		screenList = addObject(screenList, getDesign(player.design, head=player.head), player.x, player.y+nBuffer)
 
 		# now add the other player if they are in the same room
-		if (other_player!=None and self.name == other_player.roomName):
+		if (other_player!="" and other_player != None and self.name == other_player.roomName):
 			screenList = addObject(screenList, getDesign(other_player.design, head=other_player.head), other_player.x, other_player.y+nBuffer)
 
 
