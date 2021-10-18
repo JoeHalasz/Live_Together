@@ -17,6 +17,7 @@ def addObject(room, add, xpos, ypos, isCenteredOBJ=False, realRoom=None):
 	for y in range(len(objectSplit)):
 		for x in range(len(objectSplit[y])):
 			if (objectSplit[y][x] != " "):
+				#if int(ypos)-y < len(room):
 				room[int(ypos)-y] = room[int(ypos)-y][:x+int(xpos)] + objectSplit[y][x] + room[int(ypos)-y][x+int(xpos)+1:]
 	return room
 
@@ -31,10 +32,11 @@ class Room:
 	right = None # this is the actual room object
 	roomObjects = [] # a lst of the different objects in the room
 
+
 	def __init__(self , _name, _width=15, _height=5, _roomObjects=[]):
 		self.name = _name
-		self.width = max(_width,15)
-		self.height = max(_height,5)
+		self.width = min(max(_width,15), 100)
+		self.height = min(max(_height,5), 25)
 		hasTag = False
 		for o in _roomObjects:
 			if o.name == _name:
@@ -44,6 +46,10 @@ class Room:
 			tag = Object(_name, -1*int(len(_name)/2), 1,centered=True)
 			_roomObjects.append(tag)
 		self.roomObjects = _roomObjects
+		if len(self.roomObjects) == len(_roomObjects) or len(self.roomObjects)-1 == len(_roomObjects):
+			pass
+		else:
+			raise Exception("dont use python")
 
 
 	def deleteObject(self, objectId):
@@ -63,7 +69,18 @@ class Room:
 			if o.objectId == objectId:
 				return o
 
-	def drawRoom(self, player, other_player=None):
+	def addRoom(self, otherRoom, leftOrRight, hasDoors=False):
+		if leftOrRight == "left":
+			self.left = otherRoom
+			if not hasDoors:
+				self.roomObjects.append(Object("door left", 1, self.height) )
+		else:
+			self.right = otherRoom
+			if not hasDoors:
+				self.roomObjects.append(Object("door right", self.width-3, self.height) )
+
+
+	def drawRoom(self, player, world, other_player=None):
 		screenList = []
 		nBuffer = 30-self.height
 		for x in range(nBuffer): # white space above roof
@@ -98,7 +115,6 @@ class Room:
 		for x in screenList:
 			screen += x + "\n"
 		#screen += str(player.x) + " " + str(player.y) + "\n"
-		
 		
 		sys.stdout.write("%s" % screen)
 		sys.stdout.flush()

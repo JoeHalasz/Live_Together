@@ -7,6 +7,7 @@ from world import *
 from action import Action
 from room import Sendroom
 
+
 fps = 60
 
 
@@ -125,7 +126,7 @@ def game(player, other_player, gameTick, world):
 
 	done, my_actions = movement(player, world)
 
-	getRoom(player.roomName, world).drawRoom(player, other_player)
+	getRoom(player.roomName, world).drawRoom(player, world, other_player)
 
 	sleep(1/fps)
 

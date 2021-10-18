@@ -28,18 +28,10 @@ def getRoom(roomName, world):
 from player import Player # THIS HAS TO BE BELOW getRoom
 
 
-def connectRooms(leftRoom, rightRoom):
-	# create the doors
-	doorLeft = Object("door left", 1, rightRoom.height)
-	doorRight = Object("door right", leftRoom.width-3, leftRoom.height) 
+def connectRooms(leftRoom, rightRoom, hasDoors=False):
+	leftRoom.addRoom(rightRoom, "right", hasDoors)
+	rightRoom.addRoom(leftRoom, "left", hasDoors)
 
-	# add the doors
-	rightRoom.roomObjects.append(doorLeft)
-	leftRoom.roomObjects.append(doorRight)
-
-	# connect the rooms
-	rightRoom.left = leftRoom
-	leftRoom.right = rightRoom
 
 
 def fix_world():
@@ -62,7 +54,9 @@ def fix_world():
 	world.append(starterRoom)
 	world.append(leftRoom)
 	world.append(gianaRoom)
-	return getPlayer(world), world
+	player = getPlayer(world)
+	player.roomName = starterRoom.name
+	return player, world
 
 
 def loadWorld(recieved=None):
@@ -203,16 +197,19 @@ def addNewObject(player, world): # this will stop the game and prompt the user f
 			for room in world:
 				if room.name == roomParts[1]: # this means there is a room of that name already
 					return None, None
-			newRoom = Room(roomParts[1], int(roomParts[2]), int(roomParts[3]))
+			newRoom = Room(roomParts[1], int(roomParts[2]), int(roomParts[3]), [])
+			
 			if "left" in name: # add it to the left of this room if available
 				if playerRoom.left == None:
 					connectRooms(newRoom, playerRoom) # this will make the doors too
 					world.append(newRoom)
+					
 					return Sendroom(newRoom, playerRoom, "left"), "added room"
 			else: # add it to the right
 				if playerRoom.right == None:
 					connectRooms(playerRoom, newRoom) # this will make the doors too
 					world.append(newRoom)
+					
 					return Sendroom(newRoom, playerRoom, "right"), "added room"
 
 		else:
