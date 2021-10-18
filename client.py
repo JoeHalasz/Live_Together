@@ -3,6 +3,8 @@ import threading
 import socket 
 from package import Package
 from world import *
+import time
+
 
 host_ip = '25.13.61.235'
 chunkSize = 1024
@@ -32,6 +34,7 @@ def send_data(s, player, my_actions):
 	
 
 def recieve_data_helper(s,player,world):
+	timebefore = time.perf_counter()
 	len_data = s.recv(HEADERSIZE) # might need to change this if its a bigger message
 	try:
 		new_len = int(pickle.loads(len_data))
@@ -40,9 +43,9 @@ def recieve_data_helper(s,player,world):
 			saveAll(player,world)
 		print("Other player disconnected")
 		quit()
+	
 	data = b''
 	while new_len != 0:
-		print("HERE")
 		if new_len < chunkSize:
 			new_data = s.recv(new_len)
 			new_len -= len(new_data)
@@ -54,6 +57,8 @@ def recieve_data_helper(s,player,world):
 		
 	
 	data = pickle.loads(data)
+	timeSpent = time.perf_counter() - timebefore
+	print("TIME: " + str(timeSpent))
 	return data
 
 
@@ -96,7 +101,7 @@ def connect():
 	s = ""
 	try:
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		s.connect((host_ip, 10003))
+		s.connect((host_ip, 10004))
 	except:
 		print("Did not connect")
 		pass
