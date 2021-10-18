@@ -8,7 +8,7 @@ from action import Action
 from room import Sendroom
 
 
-fps = 20
+fps = 60
 
 
 def handleHolding(player, moved, world):

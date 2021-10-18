@@ -33,7 +33,12 @@ def send_data(s, player, my_actions):
 
 def recieve_data_helper(s):
 	len_data = s.recv(HEADERSIZE) # might need to change this if its a bigger message
-	new_len = int(pickle.loads(len_data))
+	try:
+		new_len = int(pickle.loads(len_data))
+	except:
+		saveAll()
+		print("Other player disconnected")
+		quit()
 	data = b''
 	lengthShouldBe = 0
 	while new_len != 0:
