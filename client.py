@@ -40,18 +40,15 @@ def recieve_data_helper(s):
 		print("Other player disconnected")
 		quit()
 	data = b''
-	lengthShouldBe = 0
 	while new_len != 0:
 		if new_len < chunkSize:
 			new_data = s.recv(new_len)
 			new_len -= len(new_data)
 			data += new_data
-			lengthShouldBe += len(new_data)
 		else:
 			new_data = s.recv(chunkSize)
 			new_len -= len(new_data)
 			data += new_data
-			lengthShouldBe += len(new_data)
 		
 	
 	data = pickle.loads(data)
