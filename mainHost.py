@@ -22,7 +22,9 @@ def hostThread(s): # this is going to send then recieve the sendData
 		global other_actions
 		send_data(s, player, my_actions) # the host sends the first bit of data
 		my_actions = []
-		other_player, other_actions = recieve_data(s, player, world)
+		other_player, new_other_actions = recieve_data(s, player, world)
+		for o in new_other_actions:
+			other_actions.append(o)
 		if breaking:
 			break
 
