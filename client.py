@@ -16,9 +16,8 @@ def send_data_helper(s, data):
 
 	length = pickle.dumps(len(send))
 	length += b' ' * (HEADERSIZE - len(length))
-	s.send(length)
 	x = 0
-	s.send(send)
+	s.send(length + send)
 	# while True: # send it in chunks
 	# 	chunk = send[x:x+chunkSize]
 	# 	if not chunk:
