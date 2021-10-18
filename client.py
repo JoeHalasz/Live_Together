@@ -34,15 +34,26 @@ def send_data(s, player, my_actions):
 def recieve_data_helper(s):
 	len_data = s.recv(HEADERSIZE) # might need to change this if its a bigger message
 	new_len = int(pickle.loads(len_data))
-	
 	data = b''
 	lengthShouldBe = 0
 	while new_len != 0:
-		new_data = s.recv(chunkSize)
-		new_len -= len(new_data)
-		data += new_data
-
-	data = pickle.loads(data)
+		if new_len < chunkSize:
+			new_data = s.recv(new_len)
+			new_len -= len(new_data)
+			data += new_data
+			lengthShouldBe += len(new_data)
+		else:
+			new_data = s.recv(chunkSize)
+			new_len -= len(new_data)
+			data += new_data
+			lengthShouldBe += len(new_data)
+		#print(new_len)
+	
+	try:
+		data = pickle.loads(data)
+	except:
+		print(str(len(data)) + ' == ' + str(lengthShouldBe) + ' == ' + str(new_len))
+		quit()
 	return data
 
 
