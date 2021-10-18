@@ -5,7 +5,7 @@ from package import Package
 from world import *
 
 host_ip = '25.13.61.235'
-chunkSize = 512
+chunkSize = 1024
 HEADERSIZE = 20
 
 
@@ -49,7 +49,7 @@ def recieve_data_helper(s):
 			lengthShouldBe += len(new_data)
 		#print(new_len)
 	
-	
+
 	data = pickle.loads(data)
 	return data
 
