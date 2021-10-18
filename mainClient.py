@@ -23,7 +23,8 @@ def clientThread(s): # this is going to recieve then send the sendData
 
 		other_player, new_other_actions = recieve_data(s, player, world)
 		for o in new_other_actions:
-			other_actions.append(o)
+			if o != None:
+				other_actions.append(o)
 		send_data(s, player, my_actions) # the host sends the first bit of data
 		my_actions = []
 		if breaking:
