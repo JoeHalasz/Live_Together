@@ -13,7 +13,7 @@ def send_data_helper(s, data):
 	send = pickle.dumps(data)
 
 	length = pickle.dumps(len(send))
-	length += b' ' * HEADERSIZE - len(length)
+	length += b' ' * (HEADERSIZE - len(length))
 	s.send(length)
 	x = 0
 	timesTook = 0
