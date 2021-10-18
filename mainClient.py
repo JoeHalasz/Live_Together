@@ -27,10 +27,10 @@ while True:
 	timeAfterSend = time.perf_counter()
 	my_actions = [] # reset my actions 
 	gameTick += 1
-	timeForRecieve = timebefore - timeAfterRecieve
-	timeForActions = timeAfterRecieve - timeAfterActions
-	timeForLoop = timeAfterRecieve - timeAfterLoop
-	timeForSend = timeAfterRecieve - timeAfterSend
+	timeForRecieve = timeAfterRecieve - timebefore
+	timeForActions = timeAfterActions - timeAfterRecieve
+	timeForLoop = timeAfterLoop - timeAfterActions
+	timeForSend = timeAfterSend - timeAfterLoop
 
 	print()
 	print("Time for send: " + str(timeForSend))
