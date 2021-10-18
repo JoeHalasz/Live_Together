@@ -32,12 +32,9 @@ def recieve_data(s, player, world): # need player just incase we need to save
 	
 	data = b''
 	while new_len != 0:
-		if new_len > 20: # recv can only get 1024 max i think
-			data += s.recv(20)
-			new_len -= 20
-		else:
-			data += s.recv(new_len)
-			new_len = 0
+		data += s.recv(1)
+		new_len -= 1
+
 	
 	data = pickle.loads(data)
 	other_actions = data.actions
