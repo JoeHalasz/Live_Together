@@ -6,7 +6,7 @@ from world import *
 
 host_ip = '25.13.61.235'
 chunkSize = 512
-HEADERSIZE = 10
+HEADERSIZE = 20
 
 
 def send_data_helper(s, data):
