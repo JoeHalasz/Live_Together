@@ -36,7 +36,8 @@ def recieve_data_helper(s,player,world):
 	try:
 		new_len = int(pickle.loads(len_data))
 	except:
-		saveAll(player,world)
+		if player != [] and world != []:
+			saveAll(player,world)
 		print("Other player disconnected")
 		quit()
 	data = b''
