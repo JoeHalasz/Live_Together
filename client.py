@@ -16,15 +16,12 @@ def send_data_helper(s, data):
 	length += b' ' * (HEADERSIZE - len(length))
 	s.send(length)
 	x = 0
-	timesTook = 0
 	while True: # send it in chunks
 		chunk = send[x:x+chunkSize]
 		if not chunk:
 			break
 		s.send(chunk)
 		x+=chunkSize
-		timesTook+=1
-	print(timesTook)
 
 
 def send_data(s, player, my_actions):
