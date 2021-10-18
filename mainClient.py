@@ -15,7 +15,7 @@ my_actions = []
 while True:
 	timebefore = time.perf_counter()
 	other_player, other_actions = recieve_data(s, player, world) # the client recieves the first bit of data
-	timeAfterRecieve = time.perf_counter
+	timeAfterRecieve = time.perf_counter()
 	dealWithActions(other_actions, player, world)
 	timeAfterActions = time.perf_counter()
 	if (other_player != ""):
