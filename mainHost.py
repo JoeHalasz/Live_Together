@@ -30,9 +30,6 @@ def hostThread(s): # this is going to send then recieve the sendData
 			break
 
 
-
-
-
 def main():
 	global my_actions
 	global other_player

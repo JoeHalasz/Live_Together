@@ -4,6 +4,7 @@ import socket
 
 
 client_ip = '25.13.61.235'
+#client_ip = 'localhost'
 
 def get_connection(s):
 	# Establish connection with client. 
