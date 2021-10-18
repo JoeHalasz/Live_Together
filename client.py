@@ -34,7 +34,6 @@ def recieve_data(s, player, world): # need player just incase we need to save
 	while new_len != 0:
 		if new_len > 20: # recv can only get 1024 max i think
 			data += s.recv(20)
-			print(data, end="")
 			new_len -= 20
 		else:
 			data += s.recv(new_len)
@@ -50,8 +49,6 @@ def send_world(s,world):
 	send = pickle.dumps(world)
 	length = pickle.dumps(len(send))
 	final = length + send
-	print(send)
-	print(len(send))
 	s.send(final)
 
 def recieve_world(s):
@@ -76,13 +73,11 @@ def recieve_world(s):
 	while new_len != 0:
 		if new_len > 20: # recv can only get 1024 max i think
 			data += s.recv(20)
-			print(data, end="")
 			new_len -= 20
 		else:
 			data += s.recv(new_len)
 			new_len = 0
 	
-	print(data)
 	world = pickle.loads(data)
 	print(len(world))
 	print(world)
