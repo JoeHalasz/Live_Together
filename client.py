@@ -5,43 +5,46 @@ from package import Package
 from world import *
 
 host_ip = '25.13.61.235'
+chunkSize = 512
+HEADERSIZE = 10
 
 def send_data(s, player, my_actions):
 	package = Package(player, my_actions)
 	# send message back
 	send = pickle.dumps(package)
 
-	length = pickle.dumps(len(send))
+	length = pickle.dumps(f'{(len(send)):<{HEADERSIZE}}')
 	final = length + send
-	s.send(final)
-	
-def recieve_data(s, player, world): # need player just incase we need to save
-	len_data = s.recv(5) # might need to change this if its a bigger message
-	thelen = 5
-	while True: # get more data until we have a full message
-		try:
-			new_len = pickle.loads(len_data[:thelen])
+	s.send(length)
+	x = 0
+	while True: # send it in chunks
+
+		chunk = send[x:x+chunkSize]
+		if not chunk:
 			break
-		except:
-			len_data += s.recv(1)
-			thelen+=1
-			if thelen > 20: # this means that the other player disconnected
-				print("Other player disconnected")
-				saveAll(player, world)
-				quit()
+		s.send(chunk)
+		x+=chunkSize
 	
+
+def recieve_data_helper(s):
+	len_data = s.recv(HEADERSIZE) # might need to change this if its a bigger message
+	new_len = pickle.loads(len_data)
+	
+	print(new_len)
 	data = b''
 
 	while new_len != 0:
-		if (new_len < 51):
-			data += s.recv(1)
-			new_len -= 1
-		else:
-			data += s.recv(50)
-			new_len -= 50
-
+		data += s.recv(1)
+		new_len -= 1
 	
 	data = pickle.loads(data)
+	return data
+
+
+def recieve_data(s, player, world): # need player just incase we need to save
+	
+	data = recieve_data_helper(s)
+
 	other_actions = data.actions
 	return data.player, other_actions
 
@@ -54,33 +57,8 @@ def send_world(s,world):
 	s.send(final)
 
 def recieve_world(s):
-	thelen = 6
-	new_len = 0
-	len_data = s.recv(thelen) # might need to change this if its a bigger message
-
-	while True: # get more data until we have a full message
-		try:
-			new_len = pickle.loads(len_data[:thelen])
-			break
-		except:
-			len_data += s.recv(1)
-			thelen+=1
-			if thelen > 20: # this means that the other player disconnected
-				print("Other player disconnected")
-				saveAll(player, world)
-				quit()
-
-	print(new_len)
-	data = b''
-	while new_len != 0:
-		if (new_len < 51):
-			data += s.recv(1)
-			new_len -= 1
-		else:
-			data += s.recv(50)
-			new_len -= 50
+	world = recieve_data_helper(s)
 	
-	world = pickle.loads(data)
 	print(len(world))
 	print(world)
 	
