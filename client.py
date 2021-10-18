@@ -3,7 +3,6 @@ import threading
 import socket 
 from package import Package
 from world import *
-import time
 
 
 host_ip = '25.13.61.235'
@@ -33,7 +32,6 @@ def send_data(s, player, my_actions):
 	
 
 def recieve_data_helper(s,player,world):
-	timebefore = time.perf_counter()
 	len_data = s.recv(HEADERSIZE) # might need to change this if its a bigger message
 	try:
 		new_len = int(pickle.loads(len_data))
@@ -56,8 +54,6 @@ def recieve_data_helper(s,player,world):
 		
 	
 	data = pickle.loads(data)
-	timeSpent = time.perf_counter() - timebefore
-	print("TIME: " + str(timeSpent))
 	return data
 
 
