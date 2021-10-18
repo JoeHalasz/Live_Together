@@ -13,16 +13,18 @@ def send_data_helper(s, data):
 	send = pickle.dumps(data)
 
 	length = pickle.dumps(len(send))
-	while len(length) < HEADERSIZE:
-		length += b' '
+	length += b' ' * HEADERSIZE - len(length)
 	s.send(length)
 	x = 0
+	timesTook = 0
 	while True: # send it in chunks
 		chunk = send[x:x+chunkSize]
 		if not chunk:
 			break
 		s.send(chunk)
 		x+=chunkSize
+		timesTook+=1
+	print(timesTook)
 
 
 def send_data(s, player, my_actions):
@@ -36,6 +38,7 @@ def recieve_data_helper(s):
 	new_len = int(pickle.loads(len_data))
 	data = b''
 	lengthShouldBe = 0
+	timesTook = 0
 	while new_len != 0:
 		if new_len < chunkSize:
 			new_data = s.recv(new_len)
@@ -47,9 +50,10 @@ def recieve_data_helper(s):
 			new_len -= len(new_data)
 			data += new_data
 			lengthShouldBe += len(new_data)
-		#print(new_len)
+		timesTook+=1
+		
 	
-
+	print(timesTook)
 	data = pickle.loads(data)
 	return data
 
