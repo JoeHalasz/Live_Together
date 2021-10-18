@@ -8,9 +8,8 @@ host_ip = '25.13.61.235'
 chunkSize = 512
 HEADERSIZE = 10
 
-def send_data(s, player, my_actions):
-	package = Package(player, my_actions)
-	# send message back
+
+def send_data_helper(s, data):
 	send = pickle.dumps(package)
 
 	length = pickle.dumps(f'{(len(send)):<{HEADERSIZE}}')
@@ -18,12 +17,17 @@ def send_data(s, player, my_actions):
 	s.send(length)
 	x = 0
 	while True: # send it in chunks
-
 		chunk = send[x:x+chunkSize]
 		if not chunk:
 			break
 		s.send(chunk)
 		x+=chunkSize
+
+
+def send_data(s, player, my_actions):
+	package = Package(player, my_actions)
+	# send message back
+	send_data_helper(s,package)
 	
 
 def recieve_data_helper(s):
@@ -49,12 +53,9 @@ def recieve_data(s, player, world): # need player just incase we need to save
 	return data.player, other_actions
 
 
-
 def send_world(s,world):
-	send = pickle.dumps(world)
-	length = pickle.dumps(len(send))
-	final = length + send
-	s.send(final)
+	send_data_helper(s,world)
+
 
 def recieve_world(s):
 	world = recieve_data_helper(s)
