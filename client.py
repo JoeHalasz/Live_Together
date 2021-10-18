@@ -68,6 +68,7 @@ def send_world(s,world):
 
 
 def recieve_world(s):
+	world = []
 	world = recieve_data_helper(s, player, world)
 	
 	print(len(world))
