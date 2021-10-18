@@ -2,6 +2,7 @@
 from client import *
 from game import game
 from world import *
+import time
 
 # connect with server 
 s = connect()
