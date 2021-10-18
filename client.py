@@ -38,21 +38,11 @@ def recieve_data_helper(s):
 	data = b''
 	lengthShouldBe = 0
 	while new_len != 0:
-		if new_len < chunkSize:
-			data += s.recv(new_len)
-			new_len -= new_len
-			lengthShouldBe += new_len
-		else:
-			data += s.recv(chunkSize)
-			new_len -= chunkSize
-			lengthShouldBe += chunkSize
-		#print(new_len)
-	
-	try:
-		data = pickle.loads(data)
-	except:
-		print(str(len(data)) + ' == ' + str(lengthShouldBe))
-		quit()
+		new_data = s.recv(chunkSize)
+		new_len -= len(new_data)
+		data += new_data
+
+	data = pickle.loads(data)
 	return data
 
 
