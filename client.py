@@ -10,7 +10,7 @@ HEADERSIZE = 10
 
 
 def send_data_helper(s, data):
-	send = pickle.dumps(package)
+	send = pickle.dumps(data)
 
 	length = pickle.dumps(f'{(len(send)):<{HEADERSIZE}}')
 	final = length + send
