@@ -49,11 +49,8 @@ def recieve_data_helper(s):
 			lengthShouldBe += len(new_data)
 		#print(new_len)
 	
-	try:
-		data = pickle.loads(data)
-	except:
-		print(str(len(data)) + ' == ' + str(lengthShouldBe) + ' == ' + str(new_len))
-		quit()
+	
+	data = pickle.loads(data)
 	return data
 
 
