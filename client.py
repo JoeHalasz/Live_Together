@@ -31,9 +31,14 @@ def recieve_data(s, player, world): # need player just incase we need to save
 				quit()
 	
 	data = b''
+
 	while new_len != 0:
-		data += s.recv(1)
-		new_len -= 1
+		if (new_len < 51):
+			data += s.recv(1)
+			new_len -= 1
+		else:
+			data += s.recv(50)
+			new_len -= 50
 
 	
 	data = pickle.loads(data)
@@ -68,8 +73,12 @@ def recieve_world(s):
 	print(new_len)
 	data = b''
 	while new_len != 0:
-		data += s.recv(1)
-		new_len -= 1
+		if (new_len < 51):
+			data += s.recv(1)
+			new_len -= 1
+		else:
+			data += s.recv(50)
+			new_len -= 50
 	
 	world = pickle.loads(data)
 	print(len(world))

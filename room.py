@@ -36,7 +36,7 @@ class Room:
 	def __init__(self , _name, _width=15, _height=5, _roomObjects=[]):
 		self.name = _name
 		self.width = min(max(_width,15), 100)
-		self.height = min(max(_height,5), 25)
+		self.height = min(max(_height,5), 26)
 		hasTag = False
 		for o in _roomObjects:
 			if o.name == _name:
