@@ -116,8 +116,8 @@ class Room:
 			screen += x + "\n"
 		#screen += str(player.x) + " " + str(player.y) + "\n"
 		
-		#sys.stdout.write("%s" % screen)
-		#sys.stdout.flush()
+		sys.stdout.write("%s" % screen)
+		sys.stdout.flush()
 
 
 
