@@ -8,7 +8,7 @@ class Player:
 	head = "o"
 	jumpState = 0
 	design = "player" # this is for the current design that should be drawn
-	holding = None
+	holding = None # this is the actual object 
 
 
 	def __init__(self, _name, _room):
@@ -34,7 +34,7 @@ class Player:
 		self.head = ">"
 
 	def moveUp(self, world, amount=1):
-		self.y = max(3, self.y-amount)
+		self.y = max(5, self.y-amount)
 
 	def moveDown(self, world, amount=1):
 		room = getRoom(self.roomName, world)

@@ -56,8 +56,16 @@ def handleJumps(player, world):
 		moved = "up"
 
 	if (player.jumpState == 0): # this has to happen after jump so that the player hits the ground before next jump
-		player.moveDown(world, .5) # gravity
-		moved = "down"
+		# only do gravity if player is not on a ladder
+		colliding = False
+		for o in getRoom(player.roomName,world).roomObjects:
+			if "ladder" == o.name:
+				if o.checkCollidingPlayer(player) and o != player.holding:
+					colliding = True
+					break
+		if not colliding:
+			player.moveDown(world, .5) # gravity
+			moved = "down"
 
 	return moved
 
@@ -91,9 +99,27 @@ def movement(player, world):
 		moved = "right"
 	room = getRoom(player.roomName, world) # the player might have changed rooms
 	if keyboard.is_pressed('s'):
-		player.design = "player crouch"
+		colliding = False # if the player is on a ladder then move them down else crouch
+		for o in getRoom(player.roomName,world).roomObjects:
+			if "ladder" == o.name:
+				if o.checkCollidingPlayer(player) and o != player.holding:
+					colliding = True
+					break
+		if colliding:
+			player.moveDown(world)
+			moved = "down"
+		else:
+			player.design = "player crouch"
 	else:
 		player.design = "player"
+	
+	if keyboard.is_pressed('w'):
+		for o in getRoom(player.roomName,world).roomObjects:
+			if "ladder" == o.name:
+				if o.checkCollidingPlayer(player) and o != player.holding:
+					player.moveUp(world)
+					moved = "up"
+					break
 	
 	if keyboard.is_pressed('j'):
 		saveAll(player, world)
