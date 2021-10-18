@@ -1,10 +1,10 @@
 from client import *
 from host import host
-from game import game
+from game import *
 from world import *
 import threading
 import traceback
-
+import time
 
 other_player = ""
 other_actions = []
@@ -47,17 +47,21 @@ def main():
 	t = threading.Thread(target=hostThread, args=(s[0],))
 	t.start()
 
+	oldTime = time.perf_counter()
+
 	try: # need this so that the other thread stops if there is an error
 		while True:
-			
-			breaking, my_actions = game(player, other_player, gameTick, world)
-			if breaking:
-				break
-			
-			if len(other_actions) != 0:
-				dealWithActions(other_actions, player, world)
-				other_actions = []
-			gameTick += 1
+			if time.perf_counter() - oldTime > (1/fps):
+				
+				breaking, my_actions = game(player, other_player, gameTick, world)
+				if breaking:
+					break
+				
+				if len(other_actions) != 0:
+					dealWithActions(other_actions, player, world)
+					other_actions = []
+				gameTick += 1
+				oldTime = time.perf_counter()
 	
 	except Exception as e:
 		print(traceback.format_exc())

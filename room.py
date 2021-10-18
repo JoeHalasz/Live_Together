@@ -80,7 +80,7 @@ class Room:
 				self.roomObjects.append(Object("door right", self.width-3, self.height) )
 
 
-	def drawRoom(self, player, world, other_player=None):
+	def drawRoom(self, player, world, other_player=None,printing=True):
 		screenList = []
 		nBuffer = 30-self.height
 		for x in range(nBuffer): # white space above roof
@@ -116,8 +116,10 @@ class Room:
 			screen += x + "\n"
 		#screen += str(player.x) + " " + str(player.y) + "\n"
 		
-		sys.stdout.write("%s" % screen)
-		sys.stdout.flush()
+		if not printing:
+			sys.stdout.flush()
+			sys.stdout.write("%s" % screen)
+			
 
 
 

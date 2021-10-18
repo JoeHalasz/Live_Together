@@ -6,9 +6,10 @@ from client import *
 from world import *
 from action import Action
 from room import Sendroom
+import time
 
-
-fps = 60
+fps = 30
+printing = False
 
 
 def handleHolding(player, moved, world):
@@ -119,16 +120,39 @@ def movement(player, world):
 
 
 
+def keepFps(timeBefore, timeAfter):
+	tb = time.perf_counter()
+	timeTotal = timeAfter - timeBefore
+	fpsGoal = 1/fps
+	# print(timeTotal)
+	# print(fpsGoal)
+	# print(timeTotal/fpsGoal)
+	mustwait = fpsGoal - timeTotal
+	# print("to keep fps must wait", mustwait)
+	# print("that is ", fps/(1/(mustwait)), "% of a frame")
+	if mustwait > 0:
+		sleep(mustwait/2) 
+		# because of the way sleep works, this can either make it 80 fps or 30 fps
+	#print("This took", time.perf_counter() - tb)
+
 
 def game(player, other_player, gameTick, world):
 
+	timeBefore = time.perf_counter()
 	refreshWorld(gameTick, fps, player, world)
+	timeAfter = time.perf_counter()
+	if printing:print("time for refresh world: ", timeAfter - timeBefore)
 
+	timeBefore = time.perf_counter()
 	done, my_actions = movement(player, world)
+	timeAfter = time.perf_counter()
+	if printing:print("time for movement: ", timeAfter - timeBefore)
 
-	getRoom(player.roomName, world).drawRoom(player, world, other_player)
+	timeBefore = time.perf_counter()
+	getRoom(player.roomName, world).drawRoom(player, world, other_player, printing)
+	timeAfter = time.perf_counter()
+	if printing:print("time for drawroom: ", timeAfter - timeBefore)
 
-	sleep(1/fps)
 
 	return done, my_actions
 
