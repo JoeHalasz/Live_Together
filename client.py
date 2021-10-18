@@ -24,7 +24,7 @@ def send_data_helper(s, data):
 		s.send(chunk)
 		x+=chunkSize
 		timesTook+=1
-	#print(timesTook)
+	print(timesTook)
 
 
 def send_data(s, player, my_actions):
@@ -38,7 +38,6 @@ def recieve_data_helper(s):
 	new_len = int(pickle.loads(len_data))
 	data = b''
 	lengthShouldBe = 0
-	timesTook = 0
 	while new_len != 0:
 		if new_len < chunkSize:
 			new_data = s.recv(new_len)
@@ -50,10 +49,8 @@ def recieve_data_helper(s):
 			new_len -= len(new_data)
 			data += new_data
 			lengthShouldBe += len(new_data)
-		timesTook+=1
 		
 	
-	print(timesTook)
 	data = pickle.loads(data)
 	return data
 
