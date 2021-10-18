@@ -86,7 +86,6 @@ def dealWithActions(other_actions, player, world):
 	for action in other_actions:
 		if action != None:
 			# if the object moved then just remove the old one and readd the new one 
-			print(action.name)
 			if action.name == "removed" or action.name == "moved":
 				done=False
 				for room in world:
@@ -100,7 +99,6 @@ def dealWithActions(other_actions, player, world):
 						break
 
 			if action.name == "added object" or action.name == "moved":
-				print("HERE", action.name)
 				getRoom(action.roomName, world).roomObjects.append(action.obj)
 				action.obj.beingHeld = False
 
@@ -116,7 +114,6 @@ def dealWithActions(other_actions, player, world):
 					connectRooms(otherRoom, room)
 			# assumes that this is not the last room and there are only left and right rooms
 			if "removed room" == action.name:
-				print("HERE", action.name)
 				room = getRoom(action.obj.name, world)
 				remove_room(room, player, world)
 
