@@ -24,7 +24,7 @@ def send_data_helper(s, data):
 		s.send(chunk)
 		x+=chunkSize
 		timesTook+=1
-	print(timesTook)
+	#print(timesTook)
 
 
 def send_data(s, player, my_actions):
