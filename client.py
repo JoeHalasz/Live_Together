@@ -31,12 +31,12 @@ def send_data(s, player, my_actions):
 	send_data_helper(s,package)
 	
 
-def recieve_data_helper(s):
+def recieve_data_helper(s,player,world):
 	len_data = s.recv(HEADERSIZE) # might need to change this if its a bigger message
 	try:
 		new_len = int(pickle.loads(len_data))
 	except:
-		saveAll()
+		saveAll(player,world)
 		print("Other player disconnected")
 		quit()
 	data = b''
@@ -57,7 +57,7 @@ def recieve_data_helper(s):
 
 def recieve_data(s, player, world): # need player just incase we need to save
 	
-	data = recieve_data_helper(s)
+	data = recieve_data_helper(s, player, world)
 
 	other_actions = data.actions
 	return data.player, other_actions
@@ -68,7 +68,7 @@ def send_world(s,world):
 
 
 def recieve_world(s):
-	world = recieve_data_helper(s)
+	world = recieve_data_helper(s, player, world)
 	
 	print(len(world))
 	print(world)
