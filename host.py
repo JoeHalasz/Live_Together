@@ -22,7 +22,7 @@ def connect():
 	player2 = "No connection to other player"
 	connections = []
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.bind((client_ip, 10003))
+	s.bind((client_ip, 10004))
 	s.listen(5)
 	while True:
 		# If no connections wait for a connection. 
@@ -118,7 +118,7 @@ def connect():
 
 def host():
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.bind((client_ip, 10003))
+	s.bind((client_ip, 10004))
 	s.listen(5)
 	while True:
 		new_c = get_connection(s)
