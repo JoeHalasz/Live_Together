@@ -44,7 +44,7 @@ def recieve_data_helper(s):
 		else:
 			data += s.recv(chunkSize)
 			new_len -= chunkSize
-		print(new_len)
+		#print(new_len)
 	
 	data = pickle.loads(data)
 	return data
