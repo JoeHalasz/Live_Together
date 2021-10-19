@@ -11,7 +11,7 @@ printing = False
 oldTime = time.perf_counter()
 while True:
 	if time.perf_counter() - oldTime >= (1/fps):
-		sys.stdout.write("%s" % str(round(1/(time.perf_counter() - oldTime), 2)))
+		#sys.stdout.write("%s" % str(round(1/(time.perf_counter() - oldTime), 2)))
 		if game(player, None, gameTick, world)[0]:
 			break
 

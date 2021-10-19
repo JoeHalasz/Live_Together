@@ -178,7 +178,12 @@ def addNewObject(player, world): # this will stop the game and prompt the user f
 			pass
 
 	if "door" not in name and name != "" and name != " ":
-		if name == "remove room":
+		if name == "/getobjects":
+			for o in getRoom(player.roomName, world).roomObjects:
+				print(o.name, o.x, o.y)
+			print("Press enter to continue")
+			input()
+		elif name == "remove room":
 			#  make sure there is somewhere for the player to go
 			room = getRoom(player.roomName, world)
 			if (room.left != None or room.right != None) and player.roomName != "Starter Room":

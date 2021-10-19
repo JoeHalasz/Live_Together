@@ -8,7 +8,7 @@ from action import Action
 from room import Sendroom
 import time
 
-fps = 30
+fps = 60
 printing = False
 
 
@@ -58,9 +58,9 @@ def handleJumps(player, world):
 	if (player.jumpState == 0): # this has to happen after jump so that the player hits the ground before next jump
 		# only do gravity if player is not on a ladder
 		colliding = False
-		for o in getRoom(player.roomName,world).roomObjects:
-			if "ladder" == o.name:
-				if o.checkCollidingPlayer(player) and o != player.holding:
+		for o in room.roomObjects:
+			if "ladder" in o.name:
+				if o.checkCollidingPlayer(player) and (player.holding == None or room.getObject(player.holding).name != "ladder"):
 					colliding = True
 					break
 		if not colliding:
@@ -72,7 +72,7 @@ def handleJumps(player, world):
 
 
 def movement(player, world):
-	speed = 1
+	speed = 30/fps
 	done = False
 	try:
 		room = getRoom(player.roomName, world)
@@ -101,12 +101,12 @@ def movement(player, world):
 	if keyboard.is_pressed('s'):
 		colliding = False # if the player is on a ladder then move them down else crouch
 		for o in getRoom(player.roomName,world).roomObjects:
-			if "ladder" == o.name:
-				if o.checkCollidingPlayer(player) and o != player.holding:
+			if "ladder" in o.name:
+				if o.checkCollidingPlayer(player) and (player.holding == None or getRoom(player.roomName, world).getObject(player.holding).name != "ladder"):
 					colliding = True
 					break
 		if colliding:
-			player.moveDown(world)
+			player.moveDown(world, speed)
 			moved = "down"
 		else:
 			player.design = "player crouch"
@@ -115,9 +115,9 @@ def movement(player, world):
 	
 	if keyboard.is_pressed('w'):
 		for o in getRoom(player.roomName,world).roomObjects:
-			if "ladder" == o.name:
-				if o.checkCollidingPlayer(player) and o != player.holding:
-					player.moveUp(world)
+			if "ladder" in o.name:
+				if o.checkCollidingPlayer(player) and (player.holding == None or getRoom(player.roomName, world).getObject(player.holding).name != "ladder"):
+					player.moveUp(world, speed)
 					moved = "up"
 					break
 	
