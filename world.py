@@ -37,15 +37,15 @@ def connectRooms(leftRoom, rightRoom, hasDoors=False):
 def fix_world():
 	global highestId
 	global world
-	cat = Object("cat", 80, 12,1)
-	cat2 = Object("small cat", 25, 12, 2)
-	bed = Object("bed", 66, 20, 4)
-	monitor = Object("monitor", 45, 20, 5)
+	cat = Object("cat", 80, 0,1)
+	cat2 = Object("small cat", 25, 0, 2)
+	bed = Object("bed", 66, 0, 4)
+	monitor = Object("monitor", 45, 0, 5)
 	highestId = 100
 
-	starterRoom = Room("Starter Room", 100,12,[cat, cat2])
-	leftRoom = Room("left Room", 50,8,[])
-	gianaRoom = Room("Next Room", 80,20,[bed, monitor])
+	starterRoom = Room("Starter Room", 600,300,[cat, cat2])
+	leftRoom = Room("left Room", 500,160,[])
+	gianaRoom = Room("Next Room", 800,400,[bed, monitor])
 
 	connectRooms(leftRoom, starterRoom)
 	connectRooms(starterRoom, gianaRoom)
@@ -60,7 +60,7 @@ def fix_world():
 
 
 def loadWorld(recieved=None):
-	# return fix_world()
+	return fix_world()
 	global highestId
 	if recieved == None:
 		world = load("world/world.wld")

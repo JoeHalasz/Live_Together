@@ -5,6 +5,7 @@ from world import *
 import threading
 import traceback
 import time
+from pygameStuff import setup
 
 other_player = ""
 other_actions = []
@@ -49,6 +50,8 @@ def main():
 
 	t = threading.Thread(target=clientThread, args=(s,))
 	t.start()
+
+	screen = setup()
 	
 	oldTime = time.perf_counter()
 	
@@ -59,7 +62,7 @@ def main():
 					dealWithActions(other_actions, player, world)
 					other_actions = []
 				
-				breaking, my_actions = game(player, other_player, gameTick, world)
+				breaking, my_actions = game(player, other_player, gameTick, world, screen)
 				if breaking:
 					break
 				gameTick += 1

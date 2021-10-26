@@ -73,9 +73,6 @@ def send_world(s,world):
 def recieve_world(s):
 	world = recieve_data_helper(s, [], [])
 	
-	print(len(world))
-	print(world)
-	
 	player, world = loadWorld(world)
 	try:
 		getRoom(player.roomName, world)

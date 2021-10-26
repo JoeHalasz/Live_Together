@@ -14,7 +14,7 @@ class Player:
 	def __init__(self, _name, _room):
 		self.name = _name
 		self.roomName = _room.name
-		self.y = _room.height-2 # put the player on the floor
+		self.y = 0 # put the player on the floor
 	
 
 	def moveLeft(self, world, amount=1):

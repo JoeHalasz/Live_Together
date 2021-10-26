@@ -7,6 +7,7 @@ from world import *
 from action import Action
 from room import Sendroom
 import time
+from pygameStuff import frameStuff
 
 fps = 60
 printing = False
@@ -64,7 +65,7 @@ def handleJumps(player, world):
 					colliding = True
 					break
 		if not colliding:
-			player.moveDown(world, .5) # gravity
+			player.moveDown(world, 5) # gravity
 			moved = "down"
 
 	return moved
@@ -72,7 +73,7 @@ def handleJumps(player, world):
 
 
 def movement(player, world):
-	speed = 30/fps
+	speed = 300/fps # this is 20
 	done = False
 	try:
 		room = getRoom(player.roomName, world)
@@ -84,7 +85,7 @@ def movement(player, world):
 
 	if keyboard.is_pressed('p'):
 		refreshTextures(world)
-	if keyboard.is_pressed('tab'):
+	if keyboard.is_pressed('tab') and not keyboard.is_pressed('alt'):
 		obj, actionName = addNewObject(player, world)
 		if obj != None:
 			my_actions.append(Action(actionName, player.roomName, obj))
@@ -162,7 +163,7 @@ def keepFps(timeBefore, timeAfter):
 	#print("This took", time.perf_counter() - tb)
 
 
-def game(player, other_player, gameTick, world):
+def game(player, other_player, gameTick, world, screen):
 
 	timeBefore = time.perf_counter()
 	refreshWorld(gameTick, fps, player, world)
@@ -176,8 +177,10 @@ def game(player, other_player, gameTick, world):
 
 	timeBefore = time.perf_counter()
 	getRoom(player.roomName, world).drawRoom(player, world, other_player, printing)
+	frameStuff(screen, player, world)
 	timeAfter = time.perf_counter()
 	if printing:print("time for drawroom: ", timeAfter - timeBefore)
+
 
 
 	return done, my_actions

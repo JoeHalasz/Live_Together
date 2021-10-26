@@ -5,6 +5,7 @@ from world import *
 import threading
 import traceback
 import time
+from pygameStuff import setup
 
 other_player = ""
 other_actions = []
@@ -47,13 +48,15 @@ def main():
 	t = threading.Thread(target=hostThread, args=(s[0],))
 	t.start()
 
+	screen = setup()
+
 	oldTime = time.perf_counter()
 
 	try: # need this so that the other thread stops if there is an error
 		while True:
 			if time.perf_counter() - oldTime > (1/fps):
 				
-				breaking, my_actions = game(player, other_player, gameTick, world)
+				breaking, my_actions = game(player, other_player, gameTick, world, screen)
 				if breaking:
 					break
 				

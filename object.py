@@ -39,9 +39,7 @@ class Object():
 
 	def checkCollidingObj(self, otherObj): # THIS DOES NOT WORK FOR CENTERED OBJECTS
 		if (otherObj.x+otherObj.size[0] > self.x and otherObj.x < self.x+self.size[0]):
-			print(self.y, self.size[1])
-			print(otherObj.y,otherObj.size[1], ">", self.y)
-			if (otherObj.y+otherObj.size[1] > self.y and otherObj.y < self.y+self.size[1]): # there is a collision
+			if (otherObj.y > self.y-self.size[1] and otherObj.y < self.y+self.size[1]): # there is a collision
 				return True
 		return False
 

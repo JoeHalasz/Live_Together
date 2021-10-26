@@ -33,10 +33,10 @@ class Room:
 	roomObjects = [] # a lst of the different objects in the room
 
 
-	def __init__(self , _name, _width=15, _height=5, _roomObjects=[]):
+	def __init__(self , _name, _width=150, _height=100, _roomObjects=[]):
 		self.name = _name
-		self.width = min(max(_width,15), 100)
-		self.height = min(max(_height,5), 26)
+		self.width = min(max(_width,600), 1400)
+		self.height = min(max(_height,300), 800)
 		hasTag = False
 		for o in _roomObjects:
 			if o.name == _name:
