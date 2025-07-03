@@ -5,8 +5,7 @@ from package import Package
 from world import *
 
 
-#host_ip = 'localhost'
-host_ip = '25.13.61.235'
+host_ip = 'localhost'
 chunkSize = 1024
 HEADERSIZE = 20
 
